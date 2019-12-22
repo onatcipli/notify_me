@@ -109,6 +109,15 @@ class NotifyFullPage extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  notifyCardModel.description,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(.8),
+                  ),
+                ),
+              ),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
