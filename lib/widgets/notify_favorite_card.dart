@@ -26,9 +26,12 @@ class NotifyFavoriteCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.passthrough,
           children: <Widget>[
-            CachedNetworkImage(
-              fit: BoxFit.fill,
-              imageUrl: notifyCardModel.backgroundImageUrl,
+            Container(
+              width: 320,
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: notifyCardModel.backgroundImageUrl,
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -46,7 +49,7 @@ class NotifyFavoriteCard extends StatelessWidget {
                     ],
                   )),
                   height: 150,
-                  width: 290,
+                  width: 320,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -63,7 +66,10 @@ class NotifyFavoriteCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  notifyCardModel.title,
+                                  notifyCardModel.title.length > 20
+                                      ? notifyCardModel.title.substring(0, 20) + '...'
+                                      : notifyCardModel.title,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,

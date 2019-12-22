@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:notify_me/widgets/notify_favorite_card.dart';
 
 class NotifyDetailPage extends StatelessWidget {
   @override

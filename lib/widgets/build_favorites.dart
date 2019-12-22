@@ -38,10 +38,12 @@ class BuildFavorites extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 3,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
+            itemCount: notifyListJson.length,
             itemBuilder: (context, index) {
               return NotifyFavoriteCard(
-                notifyCardModel: NotifyCardModel.fromJson(notifyJson),
+                notifyCardModel: NotifyCardModel.fromJson(
+                  notifyListJson.elementAt(index),
+                ),
               );
             },
           ),

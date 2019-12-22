@@ -7,9 +7,10 @@ class BuildRegularNotifyCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        itemCount: notifyListJson.length,
         itemBuilder: (BuildContext context, int index) {
           return RegularNotifyCard(
-              notifyCardModel: NotifyCardModel.fromJson(notifyJson));
+              notifyCardModel: NotifyCardModel.fromJson(notifyListJson.elementAt(index)));
         },
       ),
     );
@@ -53,7 +54,9 @@ class RegularNotifyCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            notifyCardModel.title,
+                            notifyCardModel.title.length > 15
+                                ? notifyCardModel.title.substring(0, 15) + '...'
+                                : notifyCardModel.title,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

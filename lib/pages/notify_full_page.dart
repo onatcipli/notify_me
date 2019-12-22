@@ -32,26 +32,12 @@ class NotifyFullPage extends StatelessWidget {
               SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Container(
-                        width: 48,
-                        height: 48,
-                        child: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(notifyCardModel.profileImageUrl),
-                        ),
-                      ),
-                      IconButton(
-                        color: Colors.white,
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
+                  child: IconButton(
+                    color: Colors.white,
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
@@ -122,6 +108,7 @@ class NotifyFullPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   notifyCardModel.description,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white.withOpacity(.8),
                   ),
