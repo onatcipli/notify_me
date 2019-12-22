@@ -108,6 +108,15 @@ class NotifyFavoriteCard extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+              icon: Icon(Icons.more_vert),
+              color: Colors.white,
+              onPressed: () {},
+            ),
           )
         ],
       ),
