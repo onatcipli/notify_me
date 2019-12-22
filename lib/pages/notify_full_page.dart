@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
+import 'package:notify_me/pages/notify_detail_page.dart';
 import 'package:notify_me/widgets/notify_favorite_card.dart';
 
 class NotifyFullPage extends StatelessWidget {
@@ -17,8 +18,16 @@ class NotifyFullPage extends StatelessWidget {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              CachedNetworkImage(
-                imageUrl: notifyCardModel.backgroundImageUrl,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return NotifyDetailPage();
+                  }));
+                },
+                child: CachedNetworkImage(
+                  imageUrl: notifyCardModel.backgroundImageUrl,
+                ),
               ),
               SafeArea(
                 child: Padding(
