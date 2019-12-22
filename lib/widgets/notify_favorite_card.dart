@@ -44,25 +44,64 @@ class NotifyFavoriteCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       SizedBox(
-                        height: 40,
+                        height: 20,
                       ),
-                      Text(
-                        notifyCardModel.title,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                notifyCardModel.title,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '~' + notifyCardModel.subTitle,
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                              ),
+                              Text(
+                                notifyCardModel.time,
+                                style: TextStyle(color: Colors.yellow),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: 64,
+                            height: 64,
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(notifyCardModel.profileImageUrl),
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '~' + notifyCardModel.subTitle,
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.9),
-                        ),
-                      ),
-                      Text(
-                        notifyCardModel.time,
-                        style: TextStyle(color: Colors.yellow),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.bookmark_border),
+                            color: Colors.white,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.refresh),
+                            color: Colors.white,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.favorite_border),
+                            color: Colors.white,
+                          ),
+                        ],
                       )
                     ],
                   ),
