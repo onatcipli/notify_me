@@ -134,9 +134,9 @@ const List<Map<String, dynamic>> notifyListJson = [
         "GS - BJK karşılaşmaya sayılı dakikalar kala ilk 11 açıklandı. Link ekte!",
     "name": "Galatasaray",
     "profileImageUrl":
-        "https://scontent-yyz1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s640x640/72317743_467714850543102_7363417868815566902_n.jpg?_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_cat=106&oh=598ec0e10e1bec3562bc325ccbf95d1a&oe=5E710752",
+        "https://picsum.photos/id/216/500/500",
     "backgroundImageUrl":
-        "https://www.manfect.com/wp-content/uploads/sicak-sarap-tarifi-kirmizi-min-1050x700.jpg ",
+        "https://picsum.photos/id/215/500/500",
     "subTitle": "Galatasaray SK",
     "time": "3m",
     "attachments": [
