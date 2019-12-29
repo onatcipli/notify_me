@@ -26,17 +26,18 @@ class NotifyDetailPage extends StatelessWidget {
             ),
             Expanded(
               flex: 6,
-              child: CarouselSlider(
-                height: MediaQuery.of(context).size.height / 1.6,
-                items: notifyListJson.map((myJson) {
-                  NotifyCardModel current = NotifyCardModel.fromJson(myJson);
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: NotifyDetailCard(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: CarouselSlider(
+                  viewportFraction: 0.9,
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  items: notifyListJson.map((myJson) {
+                    NotifyCardModel current = NotifyCardModel.fromJson(myJson);
+                    return NotifyDetailCard(
                       notifyCardModel: current,
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ],
