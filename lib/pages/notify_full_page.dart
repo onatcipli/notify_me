@@ -25,8 +25,13 @@ class NotifyFullPage extends StatelessWidget {
                     return NotifyDetailPage();
                   }));
                 },
-                child: CachedNetworkImage(
-                  imageUrl: notifyCardModel.backgroundImageUrl,
+                child: Hero(
+                  child: CachedNetworkImage(
+                    height: MediaQuery.of(context).size.height / 1.5,
+                    fit: BoxFit.fill,
+                    imageUrl: notifyCardModel.backgroundImageUrl,
+                  ),
+                  tag: notifyCardModel.id,
                 ),
               ),
               SafeArea(
@@ -39,6 +44,20 @@ class NotifyFullPage extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 100,
+                  child: Container(),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: <Color>[gradientBeginColor, Colors.transparent],
+                  )),
                 ),
               ),
             ],

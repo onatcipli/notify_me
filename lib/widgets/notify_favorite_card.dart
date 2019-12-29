@@ -36,9 +36,11 @@ class NotifyFavoriteCard extends StatelessWidget {
             children: <Widget>[
               Container(
                 width: width,
-                child: CachedNetworkImage(
-                  fit: BoxFit.fill,
-                  imageUrl: notifyCardModel.backgroundImageUrl,
+                child: Hero(
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: notifyCardModel.backgroundImageUrl,
+                  ), tag: notifyCardModel.id,
                 ),
               ),
               Align(
