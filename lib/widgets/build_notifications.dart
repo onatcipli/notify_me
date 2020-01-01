@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
-import 'package:notify_me/widgets/regular_notify_card.dart';
+import 'package:notify_me/widgets/notification_cards/notification_card.dart';
 
 class BuildNotifications extends StatelessWidget {
   @override
@@ -11,9 +11,11 @@ class BuildNotifications extends StatelessWidget {
         child: ListView.builder(
           itemCount: notifyListJson.length,
           itemBuilder: (BuildContext context, int index) {
-            return RegularNotifyCard(
-                notifyCardModel:
-                    NotificationModel.fromJson(notifyListJson.elementAt(index)));
+            return NotificationCard(
+              notificationModel: NotificationModel.fromJson(
+                notifyListJson.elementAt(index),
+              ),
+            );
           },
         ),
       ),

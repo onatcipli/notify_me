@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 
-class RegularNotifyCard extends StatelessWidget {
-  final NotificationModel notifyCardModel;
+class NotificationCard extends StatelessWidget {
+  final NotificationModel notificationModel;
 
-  const RegularNotifyCard({Key key, this.notifyCardModel}) : super(key: key);
+  const NotificationCard({Key key, this.notificationModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class RegularNotifyCard extends StatelessWidget {
               flex: 1,
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
-                imageUrl: notifyCardModel.backgroundImageUrl,
+                imageUrl: notificationModel.backgroundImageUrl,
               ),
             ),
             Expanded(
@@ -37,9 +37,9 @@ class RegularNotifyCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          notifyCardModel.title.length > 15
-                              ? notifyCardModel.title.substring(0, 15) + '...'
-                              : notifyCardModel.title,
+                          notificationModel.title.length > 15
+                              ? notificationModel.title.substring(0, 15) + '...'
+                              : notificationModel.title,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -63,11 +63,11 @@ class RegularNotifyCard extends StatelessWidget {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                            child: Text('~' + notifyCardModel.subTitle),
+                            child: Text('~' + notificationModel.subTitle),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                            child: Text(notifyCardModel.time),
+                            child: Text(notificationModel.time),
                           ),
                         ],
                       ),
@@ -78,7 +78,7 @@ class RegularNotifyCard extends StatelessWidget {
                             height: 32,
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(
-                                  notifyCardModel.profileImageUrl),
+                                  notificationModel.profileImageUrl),
                             ),
                           ),
                           SizedBox(

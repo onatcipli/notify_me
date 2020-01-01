@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
-import 'package:notify_me/widgets/favorite_notification_card.dart';
+import 'package:notify_me/widgets/notification_cards/favorite_notification_card.dart';
 
 class BuildFavoriteNotifications extends StatelessWidget {
   @override
@@ -21,6 +21,7 @@ class BuildFavoriteNotifications extends StatelessWidget {
                     'Favorilerim',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   ),
+                  //TODO: add these values dynamic
                   Text(
                     '23 noti',
                     style: TextStyle(color: Colors.black54),
@@ -52,7 +53,7 @@ class BuildFavoriteNotifications extends StatelessWidget {
                     .of(context)
                     .size
                     .height / 3,
-                notificationCardModel: NotificationModel.fromJson(
+                notificationModel: NotificationModel.fromJson(
                   notifyListJson.elementAt(index),
                 ),
               );

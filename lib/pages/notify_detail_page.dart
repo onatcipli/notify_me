@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/widgets/build_categories.dart';
-import 'package:notify_me/widgets/notification_model.dart';
+import 'package:notify_me/widgets/notification_cards/notification_detail_card.dart';
 
 class NotifyDetailPage extends StatelessWidget {
   @override
@@ -33,8 +33,8 @@ class NotifyDetailPage extends StatelessWidget {
                   height: MediaQuery.of(context).size.height / 1.5,
                   items: notifyListJson.map((myJson) {
                     NotificationModel current = NotificationModel.fromJson(myJson);
-                    return NotifyDetailCard(
-                      notifyCardModel: current,
+                    return NotificationDetailCard(
+                      notificationModel: current,
                     );
                   }).toList(),
                 ),

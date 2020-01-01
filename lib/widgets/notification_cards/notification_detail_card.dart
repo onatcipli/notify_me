@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/pages/notify_full_page.dart';
 
-class NotifyDetailCard extends StatelessWidget {
-  final NotificationModel notifyCardModel;
+class NotificationDetailCard extends StatelessWidget {
+  final NotificationModel notificationModel;
 
   final double height;
 
-  const NotifyDetailCard({Key key, this.notifyCardModel, this.height = 500}) : super(key: key);
+  const NotificationDetailCard(
+      {Key key, this.notificationModel, this.height = 500})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class NotifyDetailCard extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return NotifyFullPage(
-                        notifyCardModel: notifyCardModel,
+                        notifyCardModel: notificationModel,
                       );
                     },
                   ),
@@ -37,7 +39,7 @@ class NotifyDetailCard extends StatelessWidget {
               child: CachedNetworkImage(
                 height: height / 1.5,
                 fit: BoxFit.fill,
-                imageUrl: notifyCardModel.backgroundImageUrl,
+                imageUrl: notificationModel.backgroundImageUrl,
               ),
             ),
             Expanded(
@@ -54,20 +56,20 @@ class NotifyDetailCard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             Text(
-                              notifyCardModel.title.length > 15
-                                  ? notifyCardModel.title.substring(0, 15) + '...'
-                                  : notifyCardModel.title,
+                              notificationModel.title.length > 15
+                                  ? notificationModel.title.substring(0, 15) +
+                                      '...'
+                                  : notificationModel.title,
                               style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white
-                              ),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             Text(
-                              '~' + notifyCardModel.subTitle,
+                              '~' + notificationModel.subTitle,
                               style: TextStyle(
                                 color: Colors.white.withOpacity(0.9),
                               ),
@@ -76,7 +78,7 @@ class NotifyDetailCard extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              notifyCardModel.time,
+                              notificationModel.time,
                               style: TextStyle(color: Colors.yellow),
                             ),
                           ],
@@ -87,17 +89,18 @@ class NotifyDetailCard extends StatelessWidget {
                               width: 64,
                               height: 64,
                               child: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(notifyCardModel.profileImageUrl),
+                                backgroundImage: NetworkImage(
+                                    notificationModel.profileImageUrl),
                               ),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             Text(
-                              notifyCardModel.name,
+                              notificationModel.name,
                               style: TextStyle(
-                                  color: Colors.white, fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -107,14 +110,16 @@ class NotifyDetailCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      notifyCardModel.description,
+                      notificationModel.description,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white.withOpacity(.8),
                       ),
                     ),
                   ),
-                  Expanded(child: Container(),),
+                  Expanded(
+                    child: Container(),
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,

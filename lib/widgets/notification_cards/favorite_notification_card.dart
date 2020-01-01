@@ -4,14 +4,14 @@ import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/pages/notify_full_page.dart';
 
 class FavoriteNotificationCard extends StatelessWidget {
-  final NotificationModel notificationCardModel;
+  final NotificationModel notificationModel;
 
   final double width;
 
   final double height;
 
   const FavoriteNotificationCard(
-      {Key key, this.notificationCardModel, this.width, this.height})
+      {Key key, this.notificationModel, this.width, this.height})
       : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class FavoriteNotificationCard extends StatelessWidget {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return NotifyFullPage(
-            notifyCardModel: notificationCardModel,
+            notifyCardModel: notificationModel,
           );
         }));
       },
@@ -37,9 +37,9 @@ class FavoriteNotificationCard extends StatelessWidget {
                 child: Hero(
                   child: CachedNetworkImage(
                     fit: BoxFit.fill,
-                    imageUrl: notificationCardModel.backgroundImageUrl,
+                    imageUrl: notificationModel.backgroundImageUrl,
                   ),
-                  tag: notificationCardModel.id,
+                  tag: notificationModel.id,
                 ),
               ),
               Align(
@@ -75,11 +75,11 @@ class FavoriteNotificationCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    notificationCardModel.title.length > 20
-                                        ? notificationCardModel.title
+                                    notificationModel.title.length > 20
+                                        ? notificationModel.title
                                                 .substring(0, 20) +
                                             '...'
-                                        : notificationCardModel.title,
+                                        : notificationModel.title,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       color: Colors.white,
@@ -88,13 +88,13 @@ class FavoriteNotificationCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '~' + notificationCardModel.subTitle,
+                                    '~' + notificationModel.subTitle,
                                     style: TextStyle(
                                       color: Colors.white.withOpacity(0.9),
                                     ),
                                   ),
                                   Text(
-                                    notificationCardModel.time,
+                                    notificationModel.time,
                                     style: TextStyle(color: Colors.yellow),
                                   ),
                                 ],
@@ -104,7 +104,7 @@ class FavoriteNotificationCard extends StatelessWidget {
                                 height: 64,
                                 child: CircleAvatar(
                                   backgroundImage: NetworkImage(
-                                      notificationCardModel.profileImageUrl),
+                                      notificationModel.profileImageUrl),
                                 ),
                               ),
                             ],
