@@ -1,6 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/pages/explore_page.dart';
+import 'package:notify_me/pages/profile_page.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -33,7 +35,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _selectedIndex,
         backgroundColor: Theme.of(context).primaryColorDark,
-        showElevation: true, // use this to remove appBar's elevation
+        showElevation: true,
+        // use this to remove appBar's elevation
         onItemSelected: (index) => setState(() {
           _selectedIndex = index;
           _pageController.animateToPage(index,
@@ -70,12 +73,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             Container(
               color: Colors.red,
             ),
-            Container(
-              color: Colors.green,
-            ),
-            Container(
-              color: Colors.blue,
-            ),
+            ProfilePage(userModel: UserModel.fromJson(userJson),),
           ],
         ),
       ),

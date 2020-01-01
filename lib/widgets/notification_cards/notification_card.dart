@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:notify_me/models/notify_card_model.dart';
+import 'package:notify_me/models/notification_model.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notificationModel;
