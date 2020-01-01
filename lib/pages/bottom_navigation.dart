@@ -1,15 +1,18 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:notify_me/widgets/build_favorites.dart';
-import 'package:notify_me/widgets/build_regular_notify_cards.dart';
+import 'package:notify_me/pages/explore_page.dart';
 
-class NotifyMeHome extends StatefulWidget {
+class BottomNavigation extends StatefulWidget {
   @override
-  _NotifyMeHomeState createState() => _NotifyMeHomeState();
+  _BottomNavigationState createState() => _BottomNavigationState();
 }
 
-class _NotifyMeHomeState extends State<NotifyMeHome> {
+class _BottomNavigationState extends State<BottomNavigation> {
+  /// We are changing the page with [_selectedIndex]
+  /// also it activates the current [BottomNavyBarItem]
   int _selectedIndex = 0;
+
+  /// It help us to animate between pages when we are changing tabs
   PageController _pageController;
 
   @override
@@ -29,6 +32,7 @@ class _NotifyMeHomeState extends State<NotifyMeHome> {
     return Scaffold(
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _selectedIndex,
+        backgroundColor: Theme.of(context).primaryColorDark,
         showElevation: true, // use this to remove appBar's elevation
         onItemSelected: (index) => setState(() {
           _selectedIndex = index;
@@ -36,23 +40,22 @@ class _NotifyMeHomeState extends State<NotifyMeHome> {
               duration: Duration(milliseconds: 300), curve: Curves.ease);
         }),
         items: [
+          //TODO: Change the navigation items later
           BottomNavyBarItem(
-            icon: Icon(Icons.apps),
+            icon: Icon(Icons.explore),
             title: Text('Home'),
-            activeColor: Colors.red,
+            activeColor: Theme.of(context).primaryColorLight,
           ),
           BottomNavyBarItem(
-              icon: Icon(Icons.people),
-              title: Text('Users'),
-              activeColor: Colors.purpleAccent),
+            icon: Icon(Icons.people),
+            title: Text('Users'),
+            activeColor: Theme.of(context).primaryColorLight,
+          ),
           BottomNavyBarItem(
-              icon: Icon(Icons.message),
-              title: Text('Messages'),
-              activeColor: Colors.pink),
-          BottomNavyBarItem(
-              icon: Icon(Icons.settings),
-              title: Text('Settings'),
-              activeColor: Colors.blue),
+            icon: Icon(Icons.settings),
+            title: Text('Settings'),
+            activeColor: Theme.of(context).primaryColorLight,
+          ),
         ],
       ),
       body: SafeArea(
@@ -62,7 +65,8 @@ class _NotifyMeHomeState extends State<NotifyMeHome> {
             setState(() => _selectedIndex = index);
           },
           children: <Widget>[
-            BuildExplorePage(),
+            //TODO: change the pages later
+            ExplorePage(),
             Container(
               color: Colors.red,
             ),
@@ -75,22 +79,6 @@ class _NotifyMeHomeState extends State<NotifyMeHome> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class BuildExplorePage extends StatelessWidget {
-  const BuildExplorePage({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        BuildFavorites(),
-        BuildRegularNotifyCards(),
-      ],
     );
   }
 }

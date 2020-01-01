@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/pages/notify_detail_page.dart';
-import 'package:notify_me/widgets/notify_favorite_card.dart';
 
 class NotifyFullPage extends StatelessWidget {
   final NotifyCardModel notifyCardModel;
@@ -12,7 +11,7 @@ class NotifyFullPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: gradientBeginColor,
+      backgroundColor: Theme.of(context).primaryColorDark,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -56,7 +55,10 @@ class NotifyFullPage extends StatelessWidget {
                       gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
-                    colors: <Color>[gradientBeginColor, Colors.transparent],
+                    colors: <Color>[
+                      Theme.of(context).primaryColorDark,
+                      Colors.transparent,
+                    ],
                   )),
                 ),
               ),

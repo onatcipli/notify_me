@@ -16,7 +16,7 @@ class NotifyDetailCard extends StatelessWidget {
     return Container(
       height: height,
       child: Card(
-        color: gradientBeginColor,
+        color: Theme.of(context).primaryColorDark,
         elevation: 10,
         child: Column(
           mainAxisSize: MainAxisSize.max,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notify_me/pages/notify_me_home.dart';
+import 'package:notify_me/pages/bottom_navigation.dart';
+import 'package:notify_me/shared/notify_light_theme.dart';
 
 void main() => runApp(NotifyMeApp());
 
@@ -8,8 +9,9 @@ class NotifyMeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: lightTheme,
       title: "NotifyMe",
-      home: NotifyMeHome(),
+      home: BottomNavigation(),
     );
   }
 }

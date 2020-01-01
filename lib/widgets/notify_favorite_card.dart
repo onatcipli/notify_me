@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/pages/notify_full_page.dart';
 
-const Color gradientBeginColor = Color(0xff222831);
-
 class NotifyFavoriteCard extends StatelessWidget {
   final NotifyCardModel notifyCardModel;
 
@@ -40,7 +38,8 @@ class NotifyFavoriteCard extends StatelessWidget {
                   child: CachedNetworkImage(
                     fit: BoxFit.fill,
                     imageUrl: notifyCardModel.backgroundImageUrl,
-                  ), tag: notifyCardModel.id,
+                  ),
+                  tag: notifyCardModel.id,
                 ),
               ),
               Align(
@@ -53,9 +52,9 @@ class NotifyFavoriteCard extends StatelessWidget {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: <Color>[
-                        gradientBeginColor,
-                        gradientBeginColor,
-                        Colors.transparent
+                        Theme.of(context).primaryColorDark,
+                        Theme.of(context).primaryColorDark,
+                        Colors.transparent,
                       ],
                     )),
                     height: 150,
