@@ -95,7 +95,7 @@ class FavoriteNotificationCard extends StatelessWidget {
                                   ),
                                   Text(
                                     notificationModel.time,
-                                    style: TextStyle(color: Colors.yellow),
+                                    style: TextStyle(color: Theme.of(context).primaryColorLight),
                                   ),
                                 ],
                               ),

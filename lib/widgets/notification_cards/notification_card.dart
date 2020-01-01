@@ -67,7 +67,11 @@ class NotificationCard extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                            child: Text(notificationModel.time),
+                            child: Text(
+                              notificationModel.time,
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColorDark),
+                            ),
                           ),
                         ],
                       ),

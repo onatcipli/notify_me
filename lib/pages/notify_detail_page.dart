@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/widgets/build_categories.dart';
 import 'package:notify_me/widgets/notification_cards/notification_detail_card.dart';
+import 'package:notify_me/widgets/search_bar.dart';
 
 class NotifyDetailPage extends StatelessWidget {
   @override
@@ -32,7 +33,8 @@ class NotifyDetailPage extends StatelessWidget {
                   viewportFraction: 0.9,
                   height: MediaQuery.of(context).size.height / 1.5,
                   items: notifyListJson.map((myJson) {
-                    NotificationModel current = NotificationModel.fromJson(myJson);
+                    NotificationModel current =
+                        NotificationModel.fromJson(myJson);
                     return NotificationDetailCard(
                       notificationModel: current,
                     );
@@ -43,37 +45,6 @@ class NotifyDetailPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class SearchBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Flexible(
-          flex: 1,
-          child: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Card(
-            borderOnForeground: true,
-            color: Colors.white,
-            child: TextField(
-              decoration: InputDecoration(hintText: 'search '),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
