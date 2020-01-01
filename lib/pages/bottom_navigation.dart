@@ -70,7 +70,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           //TODO: change the pages later
           SafeArea(child: ExplorePage()),
           Container(
-            color: Colors.red,
+            color: Colors.white,
           ),
           ProfilePage(userModel: UserModel.fromJson(userJson),),
         ],
