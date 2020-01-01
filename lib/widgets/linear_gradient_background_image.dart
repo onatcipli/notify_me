@@ -35,7 +35,9 @@ class LinearGradientBackgroundImage extends StatelessWidget {
                 end: Alignment.topCenter,
                 colors: <Color>[
                   color,
-                  color,
+                  color.withOpacity(0.9),
+                  color.withOpacity(0.8),
+                  color.withOpacity(0.6),
                   Colors.transparent,
                 ],
               ),

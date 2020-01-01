@@ -61,21 +61,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() => _selectedIndex = index);
-          },
-          children: <Widget>[
-            //TODO: change the pages later
-            ExplorePage(),
-            Container(
-              color: Colors.red,
-            ),
-            ProfilePage(userModel: UserModel.fromJson(userJson),),
-          ],
-        ),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() => _selectedIndex = index);
+        },
+        children: <Widget>[
+          //TODO: change the pages later
+          SafeArea(child: ExplorePage()),
+          Container(
+            color: Colors.red,
+          ),
+          ProfilePage(userModel: UserModel.fromJson(userJson),),
+        ],
       ),
     );
   }
