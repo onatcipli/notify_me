@@ -56,9 +56,10 @@ class BuildUserInfo extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: 10,
+          width: 20,
         ),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Row(
               mainAxisSize: MainAxisSize.max,
