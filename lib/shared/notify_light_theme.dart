@@ -11,4 +11,5 @@ final lightTheme = ThemeData(
   primaryColorDark: primaryColorDark,
   primaryColor: primaryColor,
   primaryColorLight: primarySwatch,
+  backgroundColor: primaryColor
 );

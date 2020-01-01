@@ -4,7 +4,7 @@ import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/pages/notify_detail_page.dart';
 
 class NotifyFullPage extends StatelessWidget {
-  final NotifyCardModel notifyCardModel;
+  final NotificationModel notifyCardModel;
 
   const NotifyFullPage({Key key, this.notifyCardModel}) : super(key: key);
 

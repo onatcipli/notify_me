@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/widgets/regular_notify_card.dart';
 
-class BuildRegularNotifyCards extends StatelessWidget {
+class BuildNotifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -13,7 +13,7 @@ class BuildRegularNotifyCards extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return RegularNotifyCard(
                 notifyCardModel:
-                    NotifyCardModel.fromJson(notifyListJson.elementAt(index)));
+                    NotificationModel.fromJson(notifyListJson.elementAt(index)));
           },
         ),
       ),

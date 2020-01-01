@@ -2,10 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 import 'package:notify_me/pages/notify_full_page.dart';
-import 'package:notify_me/widgets/notify_favorite_card.dart';
 
 class NotifyDetailCard extends StatelessWidget {
-  final NotifyCardModel notifyCardModel;
+  final NotificationModel notifyCardModel;
 
   final double height;
 

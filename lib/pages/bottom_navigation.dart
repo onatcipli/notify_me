@@ -43,17 +43,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
           //TODO: Change the navigation items later
           BottomNavyBarItem(
             icon: Icon(Icons.explore),
-            title: Text('Home'),
+            title: Text('Explore'),
             activeColor: Theme.of(context).primaryColorLight,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Users'),
+            icon: Icon(Icons.create),
+            title: Text('Create'),
             activeColor: Theme.of(context).primaryColorLight,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
+            icon: Icon(Icons.person),
+            title: Text('Profile'),
             activeColor: Theme.of(context).primaryColorLight,
           ),
         ],

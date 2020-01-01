@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
-import 'package:notify_me/widgets/notify_favorite_card.dart';
+import 'package:notify_me/widgets/favorite_notification_card.dart';
 
-class BuildFavorites extends StatelessWidget {
+class BuildFavoriteNotifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +43,7 @@ class BuildFavorites extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: notifyListJson.length,
             itemBuilder: (context, index) {
-              return NotifyFavoriteCard(
+              return FavoriteNotificationCard(
                 width: MediaQuery
                     .of(context)
                     .size
@@ -52,7 +52,7 @@ class BuildFavorites extends StatelessWidget {
                     .of(context)
                     .size
                     .height / 3,
-                notifyCardModel: NotifyCardModel.fromJson(
+                notificationCardModel: NotificationModel.fromJson(
                   notifyListJson.elementAt(index),
                 ),
               );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notify_me/widgets/build_favorites.dart';
-import 'package:notify_me/widgets/build_regular_notify_cards.dart';
+import 'package:notify_me/widgets/build_favorite_notifications.dart';
+import 'package:notify_me/widgets/build_notifications.dart';
 
 
 class ExplorePage extends StatelessWidget {
@@ -12,8 +12,8 @@ class ExplorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        BuildFavorites(),
-        BuildRegularNotifyCards(),
+        BuildFavoriteNotifications(),
+        BuildNotifications(),
       ],
     );
   }

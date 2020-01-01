@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notify_me/models/notify_card_model.dart';
 
 class RegularNotifyCard extends StatelessWidget {
-  final NotifyCardModel notifyCardModel;
+  final NotificationModel notifyCardModel;
 
   const RegularNotifyCard({Key key, this.notifyCardModel}) : super(key: key);
 

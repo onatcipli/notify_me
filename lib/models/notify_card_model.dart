@@ -4,13 +4,13 @@
 
 import 'dart:convert';
 
-NotifyCardModel notifyCardModelFromJson(String str) =>
-    NotifyCardModel.fromJson(json.decode(str));
+NotificationModel notificationModelFromJson(String str) =>
+    NotificationModel.fromJson(json.decode(str));
 
-String notifyCardModelToJson(NotifyCardModel data) =>
+String notificationModelToJson(NotificationModel data) =>
     json.encode(data.toJson());
 
-class NotifyCardModel {
+class NotificationModel {
   int id;
   String title;
   String description;
@@ -21,7 +21,7 @@ class NotifyCardModel {
   String time;
   List<String> attachments;
 
-  NotifyCardModel({
+  NotificationModel({
     this.id,
     this.title,
     this.description,
@@ -33,8 +33,8 @@ class NotifyCardModel {
     this.attachments,
   });
 
-  factory NotifyCardModel.fromJson(Map<String, dynamic> json) =>
-      NotifyCardModel(
+  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
+      NotificationModel(
         id: json["id"],
         title: json["title"],
         description: json["description"],
