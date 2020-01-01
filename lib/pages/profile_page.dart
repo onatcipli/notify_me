@@ -18,7 +18,7 @@ class ProfilePage extends StatelessWidget {
           children: <Widget>[
             LinearGradientBackgroundImage(
               imageUrl: userModel.backgroundImageUrl,
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
             ),
             Positioned(
               left: 15,

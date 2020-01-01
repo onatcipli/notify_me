@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
-import 'package:notify_me/pages/notify_full_page.dart';
+import 'package:notify_me/pages/notification_stories.dart';
 
 class NotificationDetailCard extends StatelessWidget {
   final NotificationModel notificationModel;
@@ -29,7 +29,7 @@ class NotificationDetailCard extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return NotifyFullPage(
+                      return NotificationStories(
                         notifyCardModel: notificationModel,
                       );
                     },
