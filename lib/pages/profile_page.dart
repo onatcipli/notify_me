@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/widgets/linear_gradient_background_image.dart';
@@ -60,13 +62,103 @@ class BuildProfileTabs extends StatelessWidget {
                 children: [
                   BuildOptionsTab(),
                   BuildFavoritesTab(),
-                  Icon(Icons.directions_bike),
+                  BuildCollections(),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class BuildCollections extends StatelessWidget {
+  final List<Map<String, dynamic>> dynamicList = [
+    {
+      "image": "https://picsum.photos/id/823/500/500",
+      "name": "Honda",
+      "number": 26,
+    },
+    {
+      "image": "https://picsum.photos/id/765/500/500",
+      "name": "Çeşme",
+      "number": 33,
+    },
+    {
+      "image": "https://picsum.photos/id/352/500/500",
+      "name": "No Sugar",
+      "number": 42,
+    },
+    {
+      "image": "https://picsum.photos/id/823/500/500",
+      "name": "Honda",
+      "number": 26,
+    },
+    {
+      "image": "https://picsum.photos/id/765/500/500",
+      "name": "Çeşme",
+      "number": 33,
+    },
+    {
+      "image": "https://picsum.photos/id/352/500/500",
+      "name": "No Sugar",
+      "number": 42,
+    },
+    {
+      "image": "https://picsum.photos/id/823/500/500",
+      "name": "Honda",
+      "number": 26,
+    },
+    {
+      "image": "https://picsum.photos/id/765/500/500",
+      "name": "Çeşme",
+      "number": 33,
+    },
+    {
+      "image": "https://picsum.photos/id/352/500/500",
+      "name": "No Sugar",
+      "number": 42,
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: dynamicList.map((current) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    image: DecorationImage(
+                      image: NetworkImage(current['image'] as String),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      current['name'],
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      current['number'].toString() + ' more',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }
