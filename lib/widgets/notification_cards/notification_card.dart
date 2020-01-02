@@ -10,7 +10,7 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 5.2,
+      height: MediaQuery.of(context).size.height / 5.0,
       child: Card(
         elevation: 5,
         child: Row(
