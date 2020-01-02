@@ -31,7 +31,7 @@ class NotifyDetailPage extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: CarouselSlider(
                   viewportFraction: 0.9,
-                  height: MediaQuery.of(context).size.height / 1.5,
+                  height: MediaQuery.of(context).size.height / 1.4,
                   items: notifyListJson.map((myJson) {
                     NotificationModel current =
                         NotificationModel.fromJson(myJson);
