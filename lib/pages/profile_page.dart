@@ -15,23 +15,29 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Column(
-      children: <Widget>[
-        Stack(
+    return SingleChildScrollView(
+      child: Container(
+        height: size.height,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            LinearGradientBackgroundImage(
-              imageUrl: userModel.backgroundImageUrl,
-              color: Theme.of(context).primaryColor,
+            Stack(
+              children: <Widget>[
+                LinearGradientBackgroundImage(
+                  imageUrl: userModel.backgroundImageUrl,
+                  color: Theme.of(context).primaryColor,
+                ),
+                Positioned(
+                  left: 15,
+                  bottom: _bottom,
+                  child: BuildUserInfo(size: size, userModel: userModel),
+                ),
+              ],
             ),
-            Positioned(
-              left: 15,
-              bottom: _bottom,
-              child: BuildUserInfo(size: size, userModel: userModel),
-            ),
+            BuildProfileTabs(),
           ],
         ),
-        BuildProfileTabs(),
-      ],
+      ),
     );
   }
 }
