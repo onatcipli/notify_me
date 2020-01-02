@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/user_model.dart';
+import 'package:notify_me/pages/create_notification_page.dart';
 import 'package:notify_me/pages/explore_page.dart';
 import 'package:notify_me/pages/profile_page.dart';
 
@@ -68,11 +69,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
         },
         children: <Widget>[
           //TODO: change the pages later
-          SafeArea(child: ExplorePage()),
-          Container(
-            color: Colors.white,
+          SafeArea(
+            child: ExplorePage(),
           ),
-          ProfilePage(userModel: UserModel.fromJson(userJson),),
+          SafeArea(
+            child: CreateNotification(),
+          ),
+          ProfilePage(
+            userModel: UserModel.fromJson(userJson),
+          ),
         ],
       ),
     );
