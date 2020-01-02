@@ -37,7 +37,7 @@ class NotificationDetailCard extends StatelessWidget {
                 );
               },
               child: CachedNetworkImage(
-                height: height / 1.5,
+                height: height / 1.8,
                 fit: BoxFit.fill,
                 imageUrl: notificationModel.backgroundImageUrl,
               ),
