@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/widgets/linear_gradient_background_image.dart';
+import 'package:notify_me/widgets/search_bar.dart';
 
 class ProfilePage extends StatelessWidget {
   final UserModel userModel;
@@ -58,13 +59,127 @@ class BuildProfileTabs extends StatelessWidget {
               child: TabBarView(
                 children: [
                   BuildOptionsTab(),
-                  Icon(Icons.directions_transit),
+                  BuildFavoritesTab(),
                   Icon(Icons.directions_bike),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BuildFavoritesTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          BuildFavoritesInstance(),
+          BuildFavoritesInstance(),
+          BuildFavoritesInstance(),
+        ],
+      ),
+    );
+  }
+}
+
+class BuildFavoritesInstance extends StatelessWidget {
+  final List<Map<String, dynamic>> dynamicList = [
+    {
+      "image": "https://picsum.photos/id/120/500/500",
+      "name": "#Dürüm",
+    },
+    {
+      "image": "https://picsum.photos/id/765/500/500",
+      "name": "@Gezi",
+    },
+    {
+      "image": "https://picsum.photos/id/352/500/500",
+      "name": "@Yemek",
+    },
+    {
+      "image": "https://picsum.photos/id/120/500/500",
+      "name": "#Dürüm",
+    },
+    {
+      "image": "https://picsum.photos/id/765/500/500",
+      "name": "@Gezi",
+    },
+    {
+      "image": "https://picsum.photos/id/352/500/500",
+      "name": "@Yemek",
+    },
+    {
+      "image": "https://picsum.photos/id/120/500/500",
+      "name": "#Dürüm",
+    },
+    {
+      "image": "https://picsum.photos/id/765/500/500",
+      "name": "@Gezi",
+    },
+    {
+      "image": "https://picsum.photos/id/352/500/500",
+      "name": "@Yemek",
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            height: 75,
+            child: SearchBar(
+              backButton: false,
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RotatedBox(
+                    child: Text(
+                      '~YEMEK',
+                      style: TextStyle(color: Colors.black87),
+                    ),
+                    quarterTurns: -1,
+                  ),
+                ),
+                for (var current in dynamicList)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          width: 70,
+                          height: 70,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(current['image'] as String),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(current['name'])
+                      ],
+                    ),
+                  )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

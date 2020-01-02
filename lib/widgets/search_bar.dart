@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
   final void Function(String text) onChanged;
+  final bool backButton;
 
-  const SearchBar({Key key, @required this.onChanged}) : super(key: key);
+  const SearchBar({Key key, @required this.onChanged, this.backButton = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        if (backButton)
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
