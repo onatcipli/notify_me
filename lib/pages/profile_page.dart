@@ -27,7 +27,137 @@ class ProfilePage extends StatelessWidget {
             ),
           ],
         ),
+        BuildProfileTabs(),
       ],
+    );
+  }
+}
+
+class BuildProfileTabs extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: DefaultTabController(
+        length: 3,
+        child: Column(
+          children: <Widget>[
+            TabBar(
+              tabs: [
+                Tab(
+                  text: 'Seçenekler',
+                ),
+                Tab(
+                  text: 'Favorilerim',
+                ),
+                Tab(
+                  text: 'Koleksiyon',
+                ),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  BuildOptionsTab(),
+                  Icon(Icons.directions_transit),
+                  Icon(Icons.directions_bike),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BuildOptionsTab extends StatelessWidget {
+  final List<String> categories = [
+    'Futbol',
+    'Yemek',
+    'Okul',
+    'Dizi',
+    'Market',
+  ];
+
+  final List<String> channels = [
+    'FenerBahçe',
+    'Yemek',
+    'Sağlık',
+    'Dizi',
+    'Dürüm',
+    'Apple',
+    'MACfit',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          ExpansionTile(
+            title: Text('Categories'),
+            children: <Widget>[
+              Wrap(
+                children: categories.map((String data) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: Chip(
+                      elevation: 2,
+                      avatar: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColorDark,
+                        child: Text(data.substring(0, 1).toUpperCase()),
+                      ),
+                      label: Text(data),
+                    ),
+                  );
+                }).toList(),
+              )
+            ],
+          ),
+          ExpansionTile(
+            title: Text('Channels'),
+            children: <Widget>[
+              Wrap(
+                children: channels.map((String data) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: Chip(
+                      backgroundColor: Colors.transparent,
+                      elevation: 5,
+                      avatar: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColorDark,
+                        child: Text('#'),
+                      ),
+                      label: Text(data),
+                    ),
+                  );
+                }).toList(),
+              )
+            ],
+          ),
+          ExpansionTile(
+            title: Text('Notifications'),
+            children: <Widget>[
+              Wrap(
+                children: channels.map((String data) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: Chip(
+                      backgroundColor: Colors.transparent,
+                      elevation: 5,
+                      avatar: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColorDark,
+                        child: Text('#'),
+                      ),
+                      label: Text(data),
+                    ),
+                  );
+                }).toList(),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
