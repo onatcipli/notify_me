@@ -9,117 +9,126 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = 115.0;
     return Container(
-      height: MediaQuery.of(context).size.height / 5.2,
+      height: height,
       child: Card(
-        elevation: 5,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: notificationModel.backgroundImageUrl,
-              ),
+            CachedNetworkImage(
+              width: MediaQuery.of(context).size.width / 3,
+              height: height,
+              fit: BoxFit.fill,
+              imageUrl: notificationModel.backgroundImageUrl,
             ),
             Expanded(
               flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          notificationModel.title.length > 15
-                              ? notificationModel.title.substring(0, 15) + '...'
-                              : notificationModel.title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(notificationModel.title,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.more_vert),
-                        color: Colors.black,
-                        onPressed: () {},
-                      ),
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(notificationModel.profileImageUrl),
+                            ),
+                            Flexible(
+                              child: IconButton(
+                                icon: Icon(Icons.more_vert),
+                                color: Colors.black,
+                                onPressed: () {},
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                            child: Text('~' + notificationModel.subTitle),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                            child: Text(
-                              notificationModel.time,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColorDark),
+                      Flexible(
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              child: Text('~' + notificationModel.subTitle, overflow: TextOverflow.ellipsis,),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              child: Text(
+                                notificationModel.time,
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColorDark),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 32,
-                            height: 32,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  notificationModel.profileImageUrl),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                        ],
-                      )
+                      Flexible(flex: 2, child: BuildActionButtons()),
                     ],
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.bookmark_border),
-                        color: Colors.black,
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.refresh),
-                        color: Colors.black,
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.favorite_border),
-                        color: Colors.black,
-                      ),
-                    ],
-                  )
                 ],
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class BuildActionButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.bookmark_border),
+          color: Colors.black,
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.refresh),
+          color: Colors.black,
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.favorite_border),
+          color: Colors.black,
+        ),
+      ],
     );
   }
 }
