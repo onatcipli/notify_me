@@ -48,7 +48,7 @@ class _NotificationStoriesState extends State<NotificationStories> {
         itemBuilder: (BuildContext context, int position) {
           NotificationModel current =
           NotificationModel.fromJson(notifyListJson.elementAt(position));
-          return slidePageAnimation2(position, current);
+          return slidePageAnimation1(position, current);
         },
       ),
     );
