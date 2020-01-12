@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/user_model.dart';
+import 'package:notify_me/widgets/build_notifications.dart';
 import 'package:notify_me/widgets/linear_gradient_background_image.dart';
 import 'package:notify_me/widgets/search_bar.dart';
 
@@ -47,11 +48,14 @@ class BuildProfileTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Column(
           children: <Widget>[
             TabBar(
               tabs: [
+                Tab(
+                  text: 'Notilerim',
+                ),
                 Tab(
                   text: 'Seçenekler',
                 ),
@@ -66,6 +70,7 @@ class BuildProfileTabs extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
+                  BuildMyNotiTab(),
                   BuildOptionsTab(),
                   BuildFavoritesTab(),
                   BuildCollections(),
@@ -165,6 +170,19 @@ class BuildCollections extends StatelessWidget {
           ),
         );
       }).toList(),
+    );
+  }
+}
+
+class BuildMyNotiTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // return BuildNotifications();
+    return Column(
+      children: <Widget>[
+        SearchBar(backButton: false),
+        Expanded(child: BuildNotifications())
+      ],
     );
   }
 }

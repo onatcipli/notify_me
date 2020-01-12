@@ -13,7 +13,7 @@ class ExplorePage extends StatelessWidget {
     return Column(
       children: <Widget>[
         BuildFavoriteNotifications(),
-        BuildNotifications(),
+        Expanded(child: BuildNotifications()),
       ],
     );
   }
