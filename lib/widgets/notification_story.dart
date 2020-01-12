@@ -5,13 +5,42 @@ import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/pages/notify_detail_page.dart';
 
-class NotificationStory extends StatelessWidget {
-  const NotificationStory({
+class NotificationStory extends StatefulWidget {
+  final NotificationModel notifyCardModel;
+
+  NotificationStory({
     Key key,
     @required this.notifyCardModel,
   }) : super(key: key);
 
-  final NotificationModel notifyCardModel;
+  @override
+  _NotificationStoryState createState() => _NotificationStoryState();
+}
+
+class _NotificationStoryState extends State<NotificationStory>  with AfterLayoutMixin {
+  final ScrollController _controller = ScrollController();
+
+  double heightOfTheImage = 400;
+
+  void handleHeight() {
+    heightOfTheImage = MediaQuery.of(context).size.height / 1.8;
+    _controller.addListener(() {
+      if (_controller.offset > 50) {
+        setState(() {
+          heightOfTheImage = MediaQuery.of(context).size.height / 4;
+        });
+      }else {
+        setState(() {
+          heightOfTheImage = MediaQuery.of(context).size.height / 1.8;
+        });
+      }
+    });
+  }
+  
+  @override
+  void afterFirstLayout(BuildContext context) {
+    handleHeight();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +56,16 @@ class NotificationStory extends StatelessWidget {
                   return NotifyDetailPage();
                 }));
               },
-              child: Hero(
-                child: CachedNetworkImage(
-                  height: MediaQuery.of(context).size.height / 1.5,
-                  fit: BoxFit.fill,
-                  imageUrl: notifyCardModel.backgroundImageUrl,
-                ),
-                tag: notifyCardModel.id,
+              child: AnimatedContainer(
+                height: heightOfTheImage,
+                width: MediaQuery.of(context).size.width,
+                child: Hero(
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: widget.notifyCardModel.backgroundImageUrl,
+                  ),
+                  tag: widget.notifyCardModel.id,
+                ), duration: Duration(milliseconds: 400),
               ),
             ),
             SafeArea(
@@ -69,6 +101,7 @@ class NotificationStory extends StatelessWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
+            controller: _controller,
             child: Column(
               children: <Widget>[
                 Padding(
@@ -82,7 +115,7 @@ class NotificationStory extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           Text(
-                            notifyCardModel.title,
+                            widget.notifyCardModel.title,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -93,7 +126,7 @@ class NotificationStory extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            '~' + notifyCardModel.subTitle,
+                            '~' + widget.notifyCardModel.subTitle,
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
                             ),
@@ -102,7 +135,7 @@ class NotificationStory extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            notifyCardModel.time,
+                            widget.notifyCardModel.time,
                             style: TextStyle(color: Colors.yellow),
                           ),
                         ],
@@ -113,15 +146,15 @@ class NotificationStory extends StatelessWidget {
                             width: 64,
                             height: 64,
                             child: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(notifyCardModel.profileImageUrl),
+                              backgroundImage: NetworkImage(
+                                  widget.notifyCardModel.profileImageUrl),
                             ),
                           ),
                           SizedBox(
                             height: 5,
                           ),
                           Text(
-                            notifyCardModel.name,
+                            widget.notifyCardModel.name,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -134,7 +167,7 @@ class NotificationStory extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    notifyCardModel.description,
+                    widget.notifyCardModel.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white.withOpacity(.8),
@@ -184,11 +217,10 @@ class NotificationStory extends StatelessWidget {
 }
 
 class StoryElement extends StatelessWidget {
-  final Random random = Random();
+  final int value = 20;
 
   @override
   Widget build(BuildContext context) {
-    final value = random.nextInt(800);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -209,4 +241,15 @@ class StoryElement extends StatelessWidget {
       ),
     );
   }
+}
+
+mixin AfterLayoutMixin<T extends StatefulWidget> on State<T> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => afterFirstLayout(context));
+  }
+
+  void afterFirstLayout(BuildContext context);
 }
