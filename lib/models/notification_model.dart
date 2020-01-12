@@ -64,7 +64,7 @@ const notifyJson = {
   "title": "Menümüze yeni üye",
   "description": "description description",
   "name": "Ali Usta",
-  //"profileImageUrl": "https://picsum.photos/id/241/500/500",
+  "profileImageUrl": "https://picsum.photos/id/241/500/500",
   "backgroundImageUrl": "https://picsum.photos/id/200/500/500",
   "subTitle": "yemek",
   "time": "12m",
