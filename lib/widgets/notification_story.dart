@@ -25,7 +25,7 @@ class _NotificationStoryState extends State<NotificationStory>  with AfterLayout
   void handleHeight() {
     heightOfTheImage = MediaQuery.of(context).size.height / 1.8;
     _controller.addListener(() {
-      if (_controller.offset > 50) {
+      if (_controller.offset > 75) {
         setState(() {
           heightOfTheImage = MediaQuery.of(context).size.height / 4;
         });
