@@ -177,7 +177,6 @@ class BuildCollections extends StatelessWidget {
 class BuildMyNotiTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return BuildNotifications();
     return Column(
       children: <Widget>[
         SearchBar(backButton: false),
