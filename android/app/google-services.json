@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "762133805133",
+    "firebase_url": "https://notifyme-2c420.firebaseio.com",
+    "project_id": "notifyme-2c420",
+    "storage_bucket": "notifyme-2c420.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762133805133:android:43a16ff7aab04abd15c404",
+        "android_client_info": {
+          "package_name": "com.crossplatformers.notify_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762133805133-opc4qtl5kb0dabt7hkcb5bgeo4d4kpev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB4Fm5KvbRCkJehguoQrCZH5N0HiyBOGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762133805133-opc4qtl5kb0dabt7hkcb5bgeo4d4kpev.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "762133805133-u2nq40vhvqld53qok2g39hhku5evk4vt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.crossplatformers.notify-me"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
