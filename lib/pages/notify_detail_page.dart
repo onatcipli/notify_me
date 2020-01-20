@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/widgets/build_categories.dart';
-import 'package:notify_me/widgets/notification_cards/notification_detail_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
 
 class NotifyDetailPage extends StatelessWidget {
