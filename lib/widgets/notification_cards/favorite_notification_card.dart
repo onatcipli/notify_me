@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/pages/notification_stories.dart';
@@ -29,17 +28,22 @@ class FavoriteNotificationCard extends StatelessWidget {
         width: width,
         height: height,
         child: Card(
-          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 3,
           child: Stack(
             children: <Widget>[
               Container(
                 width: width,
-                child: Hero(
-                  child: CachedNetworkImage(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
                     fit: BoxFit.fill,
-                    imageUrl: notificationModel.backgroundImageUrl,
+                    image: NetworkImage(
+                      notificationModel.backgroundImageUrl,
+                    ),
                   ),
-                  tag: notificationModel.id,
                 ),
               ),
               Align(
@@ -48,32 +52,54 @@ class FavoriteNotificationCard extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                   child: Container(
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
+                        ),
                         gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: <Color>[
-                        Theme.of(context).primaryColorDark,
-                        Theme.of(context).primaryColorDark,
-                        Colors.transparent,
-                      ],
-                    )),
-                    height: 150,
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: <Color>[
+                            Theme.of(context).primaryColorDark,
+                            Theme.of(context).primaryColorDark,
+                            Color.fromARGB(88, 22, 28, 31),
+                            Colors.transparent,
+                          ],
+                        )),
+                    height: 200,
                     width: 320,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          SizedBox(
-                            height: 20,
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.access_time,
+                                        color:
+                                            Theme.of(context).primaryColorLight,
+                                        size: 16,
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text(
+                                        notificationModel.time,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Theme.of(context)
+                                                .primaryColorLight),
+                                      )
+                                    ],
+                                  ),
                                   Text(
                                     notificationModel.title.length > 20
                                         ? notificationModel.title
@@ -93,10 +119,6 @@ class FavoriteNotificationCard extends StatelessWidget {
                                       color: Colors.white.withOpacity(0.9),
                                     ),
                                   ),
-                                  Text(
-                                    notificationModel.time,
-                                    style: TextStyle(color: Theme.of(context).primaryColorLight),
-                                  ),
                                 ],
                               ),
                               Container(
@@ -109,24 +131,40 @@ class FavoriteNotificationCard extends StatelessWidget {
                               ),
                             ],
                           ),
+                          SizedBox(height: 16),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              IconButton(
+                              FlatButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.bookmark_border),
-                                color: Colors.white,
+                                child: Icon(
+                                  Icons.expand_less,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                color: Theme.of(context).accentColor,
+                                shape: CircleBorder(side: BorderSide()),
                               ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.refresh),
-                                color: Colors.white,
+                              Text(
+                                "+121",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              IconButton(
+                              FlatButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.favorite_border),
-                                color: Colors.white,
+                                child: Icon(
+                                  Icons.expand_more,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                color: Colors.white70,
+                                shape: CircleBorder(side: BorderSide()),
                               ),
                             ],
                           )

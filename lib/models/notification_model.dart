@@ -66,7 +66,7 @@ const notifyJson = {
   "name": "Ali Usta",
   "profileImageUrl": "https://picsum.photos/id/241/500/500",
   "backgroundImageUrl": "https://picsum.photos/id/200/500/500",
-  "subTitle": "yemek",
+  "subTitle": "Yemek",
   "time": "12m",
   "attachments": ["https://picsum.photos/id/241/500/500"]
 };
@@ -80,7 +80,7 @@ const List<Map<String, dynamic>> notifyListJson = [
     "name": "Ali Usta",
     "profileImageUrl": "https://picsum.photos/id/241/500/500",
     "backgroundImageUrl": "https://picsum.photos/id/200/500/500",
-    "subTitle": "yemek",
+    "subTitle": "Yemek",
     "time": "12m",
     "attachments": ["https://picsum.photos/id/241/500/500"]
   },
