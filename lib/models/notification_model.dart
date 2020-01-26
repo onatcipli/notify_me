@@ -93,7 +93,7 @@ const List<Map<String, dynamic>> notifyListJson = [
     "profileImageUrl":
         "http://www.antepmahsulleri.com/Uploads/UrunResimleri/baharat-cesitleri-ipek-kirmizi-pul-biber-0292.jpg",
     "backgroundImageUrl":
-        "https://www.gaziantep.com/imgs/700x420x1/2018-11/gaziantepden.png",
+        "https://www.antepmahsulleri.com/Uploads/Blog/Gaziantep-Baharat-Online-Alisveris-Burad-3933.JPG",
     "subTitle": "Alışveriş",
     "time": "1h",
     "attachments": [

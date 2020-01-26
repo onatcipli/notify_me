@@ -1,10 +1,10 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/pages/create_notification_page.dart';
 import 'package:notify_me/pages/explore_page.dart';
 import 'package:notify_me/pages/profile_page.dart';
-
+import 'package:notify_me/widgets/bottom_navi_bar.dart';
 class BottomNavigation extends StatefulWidget {
   @override
   _BottomNavigationState createState() => _BottomNavigationState();
@@ -35,7 +35,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _selectedIndex,
-        backgroundColor: Theme.of(context).primaryColorDark,
+        backgroundColor: Colors.white,
         showElevation: true,
         // use this to remove appBar's elevation
         onItemSelected: (index) => setState(() {
@@ -44,21 +44,23 @@ class _BottomNavigationState extends State<BottomNavigation> {
               duration: Duration(milliseconds: 300), curve: Curves.ease);
         }),
         items: [
-          //TODO: Change the navigation items later
           BottomNavyBarItem(
-            icon: Icon(Icons.explore),
+            icon: Icon(Icons.info_outline),
             title: Text('Explore'),
-            activeColor: Theme.of(context).primaryColorLight,
+            activeColor: Theme.of(context).accentColor,
+            inactiveColor: Colors.grey.withOpacity(.5)
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.create),
+            icon: Icon(Icons.add_circle_outline),
             title: Text('Create'),
-            activeColor: Theme.of(context).primaryColorLight,
+            activeColor: Theme.of(context).accentColor,
+            inactiveColor: Colors.grey.withOpacity(.5)
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline),
             title: Text('Profile'),
-            activeColor: Theme.of(context).primaryColorLight,
+            activeColor: Theme.of(context).accentColor,
+            inactiveColor: Colors.grey.withOpacity(.5)
           ),
         ],
       ),
