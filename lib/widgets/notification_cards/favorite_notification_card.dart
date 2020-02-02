@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/pages/notification_stories.dart';
+import 'package:notify_me/widgets/notification_cards/vote_part.dart';
 
 class FavoriteNotificationCard extends StatelessWidget {
   final NotificationModel notificationModel;
@@ -132,42 +133,7 @@ class FavoriteNotificationCard extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 16),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              FlatButton(
-                                onPressed: () {},
-                                child: Icon(
-                                  Icons.expand_less,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                color: Theme.of(context).accentColor,
-                                shape: CircleBorder(side: BorderSide()),
-                              ),
-                              Text(
-                                "+121",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              FlatButton(
-                                onPressed: () {},
-                                child: Icon(
-                                  Icons.expand_more,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                color: Colors.white70,
-                                shape: CircleBorder(side: BorderSide()),
-                              ),
-                            ],
-                          )
+                          VotePart(size: 40,downColor: Colors.white70,textColor: Colors.white70,)
                         ],
                       ),
                     ),

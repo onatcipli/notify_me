@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
+import 'package:notify_me/widgets/notification_cards/vote_part.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notificationModel;
@@ -16,12 +17,6 @@ class NotificationCard extends StatelessWidget {
         elevation: 5,
         child: Row(
           children: <Widget>[
-            CachedNetworkImage(
-              width: MediaQuery.of(context).size.width / 3,
-              height: height,
-              fit: BoxFit.fill,
-              imageUrl: notificationModel.backgroundImageUrl,
-            ),
             Expanded(
               flex: 2,
               child: Column(
@@ -30,106 +25,89 @@ class NotificationCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                    padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(notificationModel.title,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
+                        Container(
+                          height: 32,
+                          width: 32,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(notificationModel.profileImageUrl),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(notificationModel.profileImageUrl),
+                            Text(
+                              '~' + notificationModel.subTitle,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            Flexible(
-                              child: IconButton(
-                                icon: Icon(Icons.more_vert),
-                                color: Colors.black,
-                                onPressed: () {},
-                              ),
+                            Text(
+                              '@' + notificationModel.name,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Flexible(
-                        flex: 1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                              child: Text('~' + notificationModel.subTitle, overflow: TextOverflow.ellipsis,),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                              child: Text(
-                                notificationModel.time,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColorDark),
-                              ),
-                            ),
-                          ],
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                      child: Text(
+                        notificationModel.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
-                      Flexible(flex: 2, child: BuildActionButtons()),
-                    ],
+                    ),
                   ),
+                  VotePart()
                 ],
               ),
+            ),
+            Stack(
+              children: <Widget>[
+                CachedNetworkImage(
+                  width: MediaQuery.of(context).size.width / 3,
+                  height: height,
+                  fit: BoxFit.fill,
+                  imageUrl: notificationModel.backgroundImageUrl,
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0,8,0,0),
+                      child: Icon(Icons.more_vert),
+                    ),
+                    onTap: () {},
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  bottom: 0,
+                  child: Text(
+                    notificationModel.time,
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              ],
             )
           ],
         ),
       ),
-    );
-  }
-}
-
-class BuildActionButtons extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.bookmark_border),
-          color: Colors.black,
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.refresh),
-          color: Colors.black,
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.favorite_border),
-          color: Colors.black,
-        ),
-      ],
     );
   }
 }
