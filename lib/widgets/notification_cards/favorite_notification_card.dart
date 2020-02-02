@@ -62,7 +62,7 @@ class FavoriteNotificationCard extends StatelessWidget {
                           colors: <Color>[
                             Theme.of(context).primaryColorDark,
                             Theme.of(context).primaryColorDark,
-                            Color.fromARGB(88, 22, 28, 31),
+                            Theme.of(context).primaryColorDark.withAlpha(88),
                             Colors.transparent,
                           ],
                         )),
