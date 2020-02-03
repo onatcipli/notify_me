@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/widgets/build_categories.dart';
+import 'package:notify_me/widgets/notification_cards/notification_detail_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
 
 class NotifyDetailPage extends StatelessWidget {
+  final PageController controller = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +26,32 @@ class NotifyDetailPage extends StatelessWidget {
                 categories: ['favorilerim', 'yemek'],
               ),
             ),
-       /*     Expanded(
+            Expanded(
+              flex: 5,
+              child: PageView.builder(
+                controller: controller,
+                itemCount: notifyListJson.length,
+                itemBuilder: (BuildContext context, int position) {
+                  final PageController verticalController = PageController();
+                  return PageView.builder(
+                    controller: verticalController,
+                    scrollDirection: Axis.vertical,
+                    itemCount: notifyListJson.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      NotificationModel current = NotificationModel.fromJson(
+                          notifyListJson.elementAt(position));
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: NotificationDetailCard(
+                          notificationModel: current,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            /*     Expanded(
               flex: 6,
               child: Align(
                 alignment: Alignment.topCenter,

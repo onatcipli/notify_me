@@ -14,6 +14,8 @@ class NotificationCard extends StatelessWidget {
     return Container(
       height: height,
       child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8))),
         elevation: 5,
         child: Row(
           children: <Widget>[
@@ -76,30 +78,47 @@ class NotificationCard extends StatelessWidget {
             ),
             Stack(
               children: <Widget>[
-                CachedNetworkImage(
-                  width: MediaQuery.of(context).size.width / 3,
-                  height: height,
-                  fit: BoxFit.fill,
-                  imageUrl: notificationModel.backgroundImageUrl,
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  child: Container(
+                    foregroundDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: <Color>[
+                        Theme.of(context).primaryColorDark,
+                        Colors.transparent,
+                        Colors.transparent,
+                        Colors.transparent,
+                        Theme.of(context).primaryColorDark,
+                      ],
+                    )),
+                    child: CachedNetworkImage(
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: height,
+                      fit: BoxFit.fill,
+                      imageUrl: notificationModel.backgroundImageUrl,
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 0,
-                  right: 0,
+                  right: 2,
                   child: GestureDetector(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0,8,0,0),
-                      child: Icon(Icons.more_vert),
+                    child: Icon(
+                      Icons.more_horiz,
+                      color: Colors.white70,
                     ),
                     onTap: () {},
                   ),
                 ),
                 Positioned(
-                  left: 0,
+                  left: 8,
                   bottom: 0,
                   child: Text(
                     notificationModel.time,
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Colors.yellow,
                     ),
                   ),
                 ),

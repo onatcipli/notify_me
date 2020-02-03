@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/pages/notify_detail_page.dart';
+import 'package:notify_me/widgets/swipe_detector.dart';
 
 class NotificationStory extends StatefulWidget {
   final NotificationModel notifyCardModel;
@@ -17,7 +18,8 @@ class NotificationStory extends StatefulWidget {
   _NotificationStoryState createState() => _NotificationStoryState();
 }
 
-class _NotificationStoryState extends State<NotificationStory>  with AfterLayoutMixin {
+class _NotificationStoryState extends State<NotificationStory>
+    with AfterLayoutMixin {
   final ScrollController _controller = ScrollController();
 
   double heightOfTheImage = 400;
@@ -29,14 +31,14 @@ class _NotificationStoryState extends State<NotificationStory>  with AfterLayout
         setState(() {
           heightOfTheImage = MediaQuery.of(context).size.height / 4;
         });
-      }else {
+      } else {
         setState(() {
           heightOfTheImage = MediaQuery.of(context).size.height / 1.8;
         });
       }
     });
   }
-  
+
   @override
   void afterFirstLayout(BuildContext context) {
     handleHeight();
@@ -49,8 +51,8 @@ class _NotificationStoryState extends State<NotificationStory>  with AfterLayout
       children: <Widget>[
         Stack(
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
+            SwipeDetector(
+              topToBottomSwipe: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return NotifyDetailPage();
@@ -65,7 +67,8 @@ class _NotificationStoryState extends State<NotificationStory>  with AfterLayout
                     imageUrl: widget.notifyCardModel.backgroundImageUrl,
                   ),
                   tag: widget.notifyCardModel.id,
-                ), duration: Duration(milliseconds: 400),
+                ),
+                duration: Duration(milliseconds: 400),
               ),
             ),
             SafeArea(
