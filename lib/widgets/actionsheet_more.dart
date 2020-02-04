@@ -38,7 +38,6 @@ class ActionSheet extends StatelessWidget {
                 
             onPressed: () {})
       ],
-      
       cancelButton: CupertinoActionSheetAction(
           onPressed: () {
             Navigator.pop(context, 'Cancel');
