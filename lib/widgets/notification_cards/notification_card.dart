@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/widgets/notification_cards/vote_part.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:notify_me/widgets/actionsheet_more.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notificationModel;
@@ -109,7 +111,9 @@ class NotificationCard extends StatelessWidget {
                       Icons.more_horiz,
                       color: Colors.white70,
                     ),
-                    onTap: () {},
+                    onTap: () {
+                          showCupertinoModalPopup(context: context, builder: (BuildContext context) => ActionSheet());
+                    },
                   ),
                 ),
                 Positioned(

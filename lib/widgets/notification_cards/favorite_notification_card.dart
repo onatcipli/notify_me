@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/pages/notification_stories.dart';
+import 'package:notify_me/widgets/actionsheet_more.dart';
 import 'package:notify_me/widgets/notification_cards/vote_part.dart';
 
 class FavoriteNotificationCard extends StatefulWidget {
@@ -221,7 +223,9 @@ class _FavoriteNotificationCardState extends State<FavoriteNotificationCard> {
                       child: IconButton(
                         icon: Icon(Icons.more_vert),
                         color: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          showCupertinoModalPopup(context: context, builder: (BuildContext context) => ActionSheet());
+                        },
                       ),
                     ),
                   ],
