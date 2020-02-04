@@ -21,7 +21,7 @@ class ActionSheet extends StatelessWidget {
         CupertinoActionSheetAction(
             child: FlatButton.icon(
                 onPressed: null,
-                icon: Icon(Icons.share),
+                icon: Icon(Icons.near_me),
                 label: Text('Paylaş')),
             onPressed: () {}),
         CupertinoActionSheetAction(
