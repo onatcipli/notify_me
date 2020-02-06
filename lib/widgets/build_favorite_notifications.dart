@@ -39,22 +39,25 @@ class BuildFavoriteNotifications extends StatelessWidget {
           height: MediaQuery
               .of(context)
               .size
-              .height / 3,
+              .height / 3-40,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: notifyListJson.length,
             itemBuilder: (context, index) {
-              return FavoriteNotificationCard(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 1.3,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height / 3,
-                notificationModel: NotificationModel.fromJson(
-                  notifyListJson.elementAt(index),
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(4,0,4,0),
+                child: FavoriteNotificationCard(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 1.3 - 40,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height / 3 - 40,
+                  notificationModel: NotificationModel.fromJson(
+                    notifyListJson.elementAt(index),
+                  ),
                 ),
               );
             },

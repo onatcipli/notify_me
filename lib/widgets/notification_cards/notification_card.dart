@@ -18,7 +18,7 @@ class NotificationCard extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8))),
-        elevation: 5,
+        elevation: 3,
         child: Row(
           children: <Widget>[
             Expanded(

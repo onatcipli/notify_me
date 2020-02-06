@@ -13,9 +13,12 @@ class BuildNotifications extends StatelessWidget {
         child: ListView.builder(
           itemCount: notifyListJson.length,
           itemBuilder: (BuildContext context, int index) {
-            return NotificationCard(
-              notificationModel: NotificationModel.fromJson(
-                notifyListJson.elementAt(index),
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(0,4,0,4),
+              child: NotificationCard(
+                notificationModel: NotificationModel.fromJson(
+                  notifyListJson.elementAt(index),
+                ),
               ),
             );
           },
