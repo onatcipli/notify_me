@@ -11,15 +11,18 @@ class VotePart extends StatelessWidget {
 
   final Color textColor;
 
-  const VotePart(
-      {Key key,
-      this.upColor,
-      this.downColor,
-      this.size = 20,
-      this.upOnTap,
-      this.downOnTap,
-      this.textColor})
-      : super(key: key);
+  final MainAxisSize mainAxisSize;
+
+  const VotePart({
+    Key key,
+    this.upColor,
+    this.downColor,
+    this.size = 20,
+    this.upOnTap,
+    this.downOnTap,
+    this.textColor,
+    this.mainAxisSize = MainAxisSize.max,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class VotePart extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: mainAxisSize,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           GestureDetector(
@@ -46,13 +49,16 @@ class VotePart extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            "+121",
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: textColor ?? Colors.black54,
-              fontSize: size / 2,
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: Text(
+              "+121",
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: textColor ?? Colors.black54,
+                fontSize: size / 2,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           GestureDetector(

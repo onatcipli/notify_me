@@ -74,7 +74,12 @@ class NotificationCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  VotePart()
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                    child: VotePart(
+                      mainAxisSize: MainAxisSize.min,
+                    ),
+                  )
                 ],
               ),
             ),
@@ -112,7 +117,9 @@ class NotificationCard extends StatelessWidget {
                       color: Colors.white70,
                     ),
                     onTap: () {
-                          showCupertinoModalPopup(context: context, builder: (BuildContext context) => ActionSheet());
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (BuildContext context) => ActionSheet());
                     },
                   ),
                 ),
