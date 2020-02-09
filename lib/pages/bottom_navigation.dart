@@ -3,6 +3,7 @@ import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/pages/create_notification_page.dart';
 import 'package:notify_me/pages/explore_page.dart';
 import 'package:notify_me/pages/profile_page.dart';
+import 'package:notify_me/shared/noti_icons_icons.dart';
 import 'package:notify_me/widgets/bottom_navi_bar.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -45,17 +46,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
         }),
         items: [
           BottomNavyBarItem(
-              icon: Icon(Icons.info_outline),
+              icon: Icon(NotiIcons.compass_1),
               title: Text('Explore'),
               activeColor: Theme.of(context).accentColor,
               inactiveColor: Colors.grey.withOpacity(.5)),
           BottomNavyBarItem(
-              icon: Icon(Icons.add_circle_outline),
+              icon: Icon(Icons.chat_bubble_outline),
               title: Text('Create'),
               activeColor: Theme.of(context).accentColor,
               inactiveColor: Colors.grey.withOpacity(.5)),
           BottomNavyBarItem(
-              icon: Icon(Icons.person_outline),
+              icon: Icon(NotiIcons.profile),
               title: Text('Profile'),
               activeColor: Theme.of(context).accentColor,
               inactiveColor: Colors.grey.withOpacity(.5)),
