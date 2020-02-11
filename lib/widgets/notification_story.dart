@@ -52,7 +52,7 @@ class _NotificationStoryState extends State<NotificationStory>
         Stack(
           children: <Widget>[
             SwipeDetector(
-              topToBottomSwipe: () {
+              onSwipeDown: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return NotifyDetailPage();

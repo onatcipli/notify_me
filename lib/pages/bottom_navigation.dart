@@ -63,6 +63,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       ),
       body: PageView(
         controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() => _selectedIndex = index);
         },
