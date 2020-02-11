@@ -21,7 +21,7 @@ class _BuildCategoriesState extends State<BuildCategories> {
         itemCount: widget.categories.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
-          String currentCategory = widget.categories.elementAt(index);
+          final String currentCategory = widget.categories.elementAt(index);
           GlobalKey key = GlobalKey();
           return GestureDetector(
             key: key,
