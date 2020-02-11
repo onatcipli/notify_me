@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-class BuildCategories extends StatelessWidget {
+class BuildCategories extends StatefulWidget {
   final List<String> categories;
 
-  const BuildCategories({Key key, this.categories}) : super(key: key);
+  BuildCategories({this.categories});
+
+  @override
+  _BuildCategoriesState createState() => _BuildCategoriesState();
+}
+
+class _BuildCategoriesState extends State<BuildCategories> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -11,30 +18,48 @@ class BuildCategories extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       height: 100,
       child: ListView.builder(
-        itemCount: categories.length,
+        itemCount: widget.categories.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
-          String currentCategory = categories.elementAt(index);
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  currentCategory,
-                  style: TextStyle(
-                    fontSize: index == 0 ? 20 : 18,
-                    fontWeight: index == 0 ? FontWeight.bold : FontWeight.w400,
+          String currentCategory = widget.categories.elementAt(index);
+          GlobalKey key = GlobalKey();
+          return GestureDetector(
+            key: key,
+            onTap: () {
+              setState(() {
+                this.selectedIndex = index;
+              });
+              Scrollable.ensureVisible(key.currentContext,curve: Curves.easeIn, duration: Duration(milliseconds: 200));
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    currentCategory,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 18,
+                      color: Colors.black.withOpacity( index == selectedIndex ? .9 : .5),
+                      fontWeight: index == selectedIndex
+                          ? FontWeight.w600
+                          : FontWeight.w300,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  '1500 noti',
-                  style: TextStyle(color: Colors.black.withOpacity(.5)),
-                )
-              ],
+                  SizedBox(height: 10),
+                  Text('1500 noti',
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: Colors.black.withOpacity( index == selectedIndex ? .5 : .3),
+                        fontWeight: index == selectedIndex
+                            ? FontWeight.w300
+                            : FontWeight.w300,
+                      ))
+                ],
+              ),
             ),
           );
         },
