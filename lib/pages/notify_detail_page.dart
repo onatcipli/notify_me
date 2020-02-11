@@ -23,7 +23,7 @@ class NotifyDetailPage extends StatelessWidget {
             Flexible(
               flex: 1,
               child: BuildCategories(
-                categories: ['favorilerim', 'yemek'],
+                categories: ['Favorilerim', 'Yemek', 'Spor', 'Gündem', 'Haber', 'Teknoloji', 'Oyun'],
               ),
             ),
             Expanded(
