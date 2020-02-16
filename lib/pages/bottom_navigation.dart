@@ -4,6 +4,7 @@ import 'package:notify_me/pages/create_notification_page.dart';
 import 'package:notify_me/pages/explore_page.dart';
 import 'package:notify_me/pages/profile_page.dart';
 import 'package:notify_me/widgets/bottom_navi_bar.dart';
+import 'package:notify_me/widgets/deck_of_cards.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -73,7 +74,60 @@ class _BottomNavigationState extends State<BottomNavigation> {
             child: ExplorePage(),
           ),
           SafeArea(
-            child: CreateNotification(),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 200,
+                ),
+                Expanded(
+                  child: DeckOfCards(
+                    deckCount: 3,
+                    children: <Widget>[
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.yellow,
+                      ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.green,
+                      ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.red,
+                      ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.orange,
+                      ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.black,
+                      ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.brown,
+                      ),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        color: Colors.pink,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           ProfilePage(
             userModel: UserModel.fromJson(userJson),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/widgets/build_categories.dart';
+import 'package:notify_me/widgets/deck_of_cards.dart';
 import 'package:notify_me/widgets/notification_cards/notification_detail_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
 
@@ -32,21 +33,16 @@ class NotifyDetailPage extends StatelessWidget {
                 controller: controller,
                 itemCount: notifyListJson.length,
                 itemBuilder: (BuildContext context, int position) {
-                  final PageController verticalController = PageController();
-                  return PageView.builder(
-                    controller: verticalController,
-                    scrollDirection: Axis.vertical,
-                    itemCount: notifyListJson.length,
-                    itemBuilder: (BuildContext context, int position) {
-                      NotificationModel current = NotificationModel.fromJson(
-                          notifyListJson.elementAt(position));
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: NotificationDetailCard(
-                          notificationModel: current,
-                        ),
+                  return DeckOfCards(
+                    size: Size(MediaQuery.of(context).size.height / 1.5,
+                        MediaQuery.of(context).size.width),
+                    children: notifyListJson.map((json) {
+                      NotificationModel current =
+                          NotificationModel.fromJson(json);
+                      return NotificationDetailCard(
+                        notificationModel: current,
                       );
-                    },
+                    }).toList(),
                   );
                 },
               ),
