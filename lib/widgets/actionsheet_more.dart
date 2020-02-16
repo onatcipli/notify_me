@@ -8,8 +8,7 @@ class ActionSheetButton extends StatelessWidget {
 
   final Color color;
 
-  const ActionSheetButton(
-      {Key key, this.onPressed, this.color, this.text})
+  const ActionSheetButton({Key key, this.onPressed, this.color, this.text})
       : super(key: key);
 
   @override
@@ -43,47 +42,40 @@ class ActionSheet extends StatelessWidget {
       ),
       child: Container(
         color: backgroundColor,
-        child: SafeArea(
+        child: Container(
+          width: 500,
+          padding: EdgeInsets.all(8.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //TODO: for later : Can we take these buttons as parameter like actionSheetButtons
-              CupertinoActionSheetAction(
-                  child: FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.star_border),
-                      label: Text('Favoriye ekle')),
-                  onPressed: () {}),
-              CupertinoActionSheetAction(
-                  child: FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.turned_in_not),
-                      label: Text('Kaydet')),
-                  onPressed: () {}),
-              CupertinoActionSheetAction(
-                  child: FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.near_me),
-                      label: Text('Paylaş')),
-                  onPressed: () {}),
-              CupertinoActionSheetAction(
-                  child: FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.sync),
-                      label: Text('Tekrarla')),
-                  onPressed: () {}),
-              CupertinoActionSheetAction(
-                  child: FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.block),
-                      label: Text('Şikayet Et')),
-                  onPressed: () {}),
-              CupertinoActionSheetAction(
+              FlatButton.icon(
+                  onPressed: null,
+                  icon: Icon(Icons.star_border),
+                  label: Text('Favoriye ekle')),
+              FlatButton.icon(
+                  onPressed: null,
+                  icon: Icon(Icons.turned_in_not),
+                  label: Text('Kaydet')),
+              FlatButton.icon(
+                  onPressed: null,
+                  icon: Icon(Icons.near_me),
+                  label: Text('Paylaş')),
+              FlatButton.icon(
+                  onPressed: null,
+                  icon: Icon(Icons.sync),
+                  label: Text('Tekrarla')),
+              FlatButton.icon(
+                  onPressed: null,
+                  icon: Icon(Icons.block),
+                  label: Text('Şikayet Et')),
+              FlatButton.icon(
                   onPressed: () {
                     Navigator.pop(context, 'Cancel');
                   },
-                  child: const Text('Vazgeç'))
+                  icon: Icon(Icons.cancel),
+                  label: Text('Vazgeç')),
             ],
           ),
         ),
