@@ -94,7 +94,7 @@ class _DeckOfCardsState extends State<DeckOfCards>
               : frontCardHeightPosition
           : (index * 8).toDouble(),
       child: Material(
-        elevation: 5,
+        color: Colors.transparent,
         child: SizedBox.fromSize(
           size: Size(widget.size.height * getScale(index), widget.size.width),
           child: GestureDetector(

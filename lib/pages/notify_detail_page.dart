@@ -35,7 +35,7 @@ class NotifyDetailPage extends StatelessWidget {
                 itemBuilder: (BuildContext context, int position) {
                   return DeckOfCards(
                     size: Size(MediaQuery.of(context).size.height / 1.5,
-                        MediaQuery.of(context).size.width),
+                        MediaQuery.of(context).size.width - 75),
                     children: notifyListJson.map((json) {
                       NotificationModel current =
                           NotificationModel.fromJson(json);
