@@ -20,9 +20,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  bloc: ^3.0.0
-  flutter_bloc: ^3.1.0
-
   firebase_core: ^0.4.3+2
   cloud_firestore: ^0.13.0+1
 
