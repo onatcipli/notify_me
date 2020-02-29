@@ -23,6 +23,12 @@ dependencies:
   firebase_core: ^0.4.3+2
   cloud_firestore: ^0.13.0+1
 
+  shared_preferences: ^0.5.6+2
+
+  bloc: ^3.0.0
+  flutter_bloc: ^3.2.0
+  equatable: ^1.1.0
+
   cached_network_image: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
