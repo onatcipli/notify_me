@@ -3,11 +3,11 @@ import 'package:notify_me/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AbstractAuthenticationRepository {
-  Future<SharedPreferences> sharedPreferences = SharedPreferences.getInstance();
+  final Future<SharedPreferences> sharedPreferences = SharedPreferences.getInstance();
 
-  String currentUserKey = 'currentUserKey';
+  final String currentUserKey = 'currentUserKey';
 
-  String collectionName = 'users';
+  final String collectionName = 'users';
 
   UserModel currentUser;
 

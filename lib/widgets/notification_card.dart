@@ -62,58 +62,6 @@ class NotificationCard extends StatelessWidget {
                 ],
               ),
             ),
-            Stack(
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  child: Container(
-                    foregroundDecoration: BoxDecoration(
-                        gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: <Color>[
-                        Theme.of(context).primaryColorDark,
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.transparent,
-                        Theme.of(context).primaryColorDark,
-                      ],
-                    )),
-                    child: CachedNetworkImage(
-                      width: MediaQuery.of(context).size.width / 3,
-                      height: height,
-                      fit: BoxFit.fill,
-                      imageUrl: notificationModel.backgroundImageUrl,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 2,
-                  child: GestureDetector(
-                    child: Icon(
-                      Icons.more_horiz,
-                      color: Colors.white70,
-                    ),
-                    onTap: () {
-                      showCupertinoModalPopup(
-                          context: context,
-                          builder: (BuildContext context) => ActionSheet());
-                    },
-                  ),
-                ),
-                Positioned(
-                  left: 8,
-                  bottom: 0,
-                  child: Text(
-                    notificationModel.time,
-                    style: TextStyle(
-                      color: Colors.yellow,
-                    ),
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),

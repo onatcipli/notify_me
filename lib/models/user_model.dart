@@ -29,7 +29,9 @@ class UserModel {
         profileUrl: json["profileUrl"],
         backgroundUrl: json["backgroundUrl"],
         followerCount: json["followerCount"],
-        followings: List<String>.from(json["followings"].map((x) => x)),
+        followings: json["followings"] == null
+            ? []
+            : List<String>.from(json["followings"].map((x) => x)),
       );
 
   factory UserModel.fromSnapshot(DocumentSnapshot snapshot) => UserModel(
@@ -39,7 +41,7 @@ class UserModel {
         backgroundUrl: snapshot.data["backgroundUrl"],
         followerCount: snapshot.data["followerCount"],
         followings: snapshot.data["followings"] == null
-            ? null
+            ? []
             : List<String>.from(snapshot.data["followings"].map((x) => x)),
       );
 
@@ -50,7 +52,7 @@ class UserModel {
         "backgroundUrl": backgroundUrl,
         "followerCount": followerCount,
         "followings": followings == null
-            ? null
+            ? []
             : List<dynamic>.from(followings.map((x) => x)),
       };
 }
