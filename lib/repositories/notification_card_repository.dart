@@ -4,7 +4,7 @@ import 'package:notify_me/models/notification_model.dart';
 abstract class AbstractNotificationCardRepository {
   final String collectionName = 'notifications';
 
-  Future<List<NotificationModel>> getNotificationCards(List<String> followings);
+  Future<List<NotificationModel>> getNotificationModels(List<String> followings);
 
   Future<DocumentReference> sendNotification(
       NotificationModel notificationModel);
@@ -13,7 +13,7 @@ abstract class AbstractNotificationCardRepository {
 class FirebaseNotificationRepository
     extends AbstractNotificationCardRepository {
   @override
-  Future<List<NotificationModel>> getNotificationCards(
+  Future<List<NotificationModel>> getNotificationModels(
       List<String> followings) async {
     List<NotificationModel> notificationCards = [];
     //TODO: whereIn can work for querying
