@@ -4,7 +4,8 @@ import 'package:notify_me/models/notification_model.dart';
 abstract class AbstractNotificationCardRepository {
   final String collectionName = 'notifications';
 
-  Future<List<NotificationModel>> getNotificationModels(List<String> followings);
+  Future<List<NotificationModel>> getNotificationModels(
+      List<String> followings);
 
   Future<DocumentReference> sendNotification(
       NotificationModel notificationModel);
@@ -17,16 +18,20 @@ class FirebaseNotificationRepository
       List<String> followings) async {
     List<NotificationModel> notificationCards = [];
     //TODO: whereIn can work for querying
-    var querySnapshot = await Firestore.instance
-        .collection(collectionName)
-        .where(
-          'ownerId',
-          isEqualTo: followings.first,
-        )
-        .getDocuments();
-    if (querySnapshot != null && querySnapshot.documents.isNotEmpty) {
-      for (DocumentSnapshot snapshot in querySnapshot.documents) {
-        notificationCards.add(NotificationModel.fromSnapshot(snapshot));
+    if (followings != null) {
+      for (int i = 0; i < followings.length; i++) {
+        var querySnapshot = await Firestore.instance
+            .collection(collectionName)
+            .where(
+              'ownerId',
+              isEqualTo: followings.elementAt(i),
+            )
+            .getDocuments();
+        if (querySnapshot != null && querySnapshot.documents.isNotEmpty) {
+          for (DocumentSnapshot snapshot in querySnapshot.documents) {
+            notificationCards.add(NotificationModel.fromSnapshot(snapshot));
+          }
+        }
       }
     }
     return notificationCards;
