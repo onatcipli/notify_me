@@ -27,14 +27,24 @@ class Home extends StatelessWidget {
           ),
         ),
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            //TODO: create bloc for sending notifications
-            await notificationCardRepository
-                .sendNotification(NotificationModel.fromJson(myJson));
-            getNotifications(context);
+        floatingActionButton:
+            BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (BuildContext context, AuthenticationState state) {
+            if (state is Authenticated) {
+              return FloatingActionButton(
+                onPressed: () async {
+                  //TODO: create bloc for sending notifications
+                  await notificationCardRepository.sendNotification(
+                      NotificationModel.fromJson(myJson),
+                      state.currentUserModel.id);
+                  getNotifications(context);
+                },
+                child: Icon(Icons.add),
+              );
+            } else {
+              return Container();
+            }
           },
-          child: Icon(Icons.add),
         ),
         body: SafeArea(
           child: Column(

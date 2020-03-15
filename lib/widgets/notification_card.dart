@@ -13,57 +13,74 @@ class NotificationCard extends StatelessWidget {
     final height = 115.0;
     return Container(
       height: height,
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8))),
-        elevation: 3,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-                    child: Row(
+      child: Stack(
+        children: <Widget>[
+          Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8))),
+            elevation: 3,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Container(
+                        height: 70,
+                        width: 70,
+                        child: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(notificationModel.profileImageUrl),
+                        ),
+                      ),
+                      Text(
+                        //TODO : change with username
+                        notificationModel.title.length > 10
+                            ? '@' + notificationModel.title.substring(0, 10)
+                            : '@' + notificationModel.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        Container(
-                          height: 32,
-                          width: 32,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(notificationModel.profileImageUrl),
-                          ),
+                        Text(
+                          notificationModel.title,
+                          style: Theme.of(context).textTheme.title,
                         ),
                         SizedBox(
-                          width: 8,
+                          height: 8,
+                        ),
+                        Text(
+                          notificationModel.subTitle,
+                          style: Theme.of(context).textTheme.subhead,
                         ),
                       ],
                     ),
                   ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                      child: Text(
-                        notificationModel.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 8,
+            right: 8,
+            child: Text(
+              notificationModel.time.minute.toString() + 'm',
+              style: Theme.of(context).textTheme.caption,
+            ),
+          )
+        ],
       ),
     );
   }
