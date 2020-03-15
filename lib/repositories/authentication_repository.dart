@@ -3,7 +3,8 @@ import 'package:notify_me/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AbstractAuthenticationRepository {
-  final Future<SharedPreferences> sharedPreferences = SharedPreferences.getInstance();
+  final Future<SharedPreferences> sharedPreferences =
+      SharedPreferences.getInstance();
 
   final String currentUserKey = 'currentUserKey';
 
@@ -53,6 +54,9 @@ class LocalAuthenticationRepository extends AbstractAuthenticationRepository {
         .collection(collectionName)
         .document(userId)
         .get();
+    if (snapshot == null) {
+      userId = await signUp();
+    }
     currentUser = UserModel.fromSnapshot(snapshot);
     return currentUser;
   }
@@ -80,7 +84,7 @@ class LocalAuthenticationRepository extends AbstractAuthenticationRepository {
     DocumentReference documentReference =
         Firestore.instance.collection(collectionName).document();
     final userId = documentReference.documentID;
-    currentUser = UserModel(id: userId);
+    currentUser = UserModel(id: userId, followings: [userId]);
     await documentReference.setData(currentUser.toJson());
     setLocalUserId(userId);
     return userId;

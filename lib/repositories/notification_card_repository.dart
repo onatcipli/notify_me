@@ -8,7 +8,9 @@ abstract class AbstractNotificationCardRepository {
       List<String> followings);
 
   Future<DocumentReference> sendNotification(
-      NotificationModel notificationModel);
+    NotificationModel notificationModel,
+    String ownerId,
+  );
 }
 
 class FirebaseNotificationRepository
@@ -39,10 +41,13 @@ class FirebaseNotificationRepository
 
   @override
   Future<DocumentReference> sendNotification(
-      NotificationModel notificationModel) async {
+    NotificationModel notificationModel,
+    String ownerId,
+  ) async {
     DocumentReference documentReference =
         Firestore.instance.collection(collectionName).document();
     notificationModel.id = documentReference.documentID;
+    notificationModel.ownerId = ownerId;
     await documentReference.setData(notificationModel.toJson());
     return documentReference;
   }
