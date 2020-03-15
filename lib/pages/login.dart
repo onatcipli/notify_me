@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/authentication_bloc.dart';
 import 'package:notify_me/blocs/authentication/authentication_state.dart';
 import 'package:notify_me/helper/navigator_helper.dart';
+import 'package:notify_me/pages/bottom_navigation.dart';
 import 'package:notify_me/pages/home.dart';
 
 class Login extends StatelessWidget {
@@ -19,7 +20,7 @@ class Login extends StatelessWidget {
       ),
       listener: (BuildContext context, AuthenticationState state) {
         if (state is Authenticated) {
-          NavigatorHelper.makeRootPage(context, Home());
+          NavigatorHelper.makeRootPage(context, BottomNavigation());
         }
         //else if (state is UnAuthenticated) {
         //  NavigatorHelper.makeRootPage(context, Home());
