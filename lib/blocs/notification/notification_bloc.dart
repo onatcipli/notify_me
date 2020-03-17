@@ -1,15 +1,19 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/models/notification_model.dart';
+import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
+import 'package:notify_me/repositories/user_repository.dart';
 import './bloc.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   final AbstractNotificationCardRepository notificationCardRepository;
 
   List<NotificationModel> lastNotificationList;
+  AuthenticationBloc auth;
 
-  NotificationBloc(this.notificationCardRepository);
+  NotificationBloc(this.notificationCardRepository, this.auth);
 
   @override
   NotificationState get initialState => Loading();
@@ -26,6 +30,11 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
           ? (state as AvailableNotifications)
               .copyWith(notificationModels: lastNotificationList)
           : AvailableNotifications(lastNotificationList);
+    } else if (event is AddFollowing) {
+      yield Loading();
+      UserModel model = await FirebaseUserRepository()
+          .addFollowing(event.userId, event.followingId);
+      add(GetNotifications(model.followings));
     }
   }
 }

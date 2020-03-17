@@ -11,90 +11,75 @@ class Home extends StatelessWidget {
   static final AbstractNotificationCardRepository notificationCardRepository =
       FirebaseNotificationRepository();
 
-  final NotificationBloc notificationBloc =
-      NotificationBloc(notificationCardRepository);
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<NotificationBloc>(
-      create: (context) => notificationBloc
-        ..add(
-          GetNotifications(
-            BlocProvider.of<AuthenticationBloc>(context)
-                .authenticationRepository
-                .currentUser
-                .followings,
-          ),
-        ),
-      child: Scaffold(
-        floatingActionButton:
-            BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (BuildContext context, AuthenticationState state) {
-            if (state is Authenticated) {
-              return FloatingActionButton(
-                onPressed: () async {
-                  //TODO: create bloc for sending notifications
-                  await notificationCardRepository.sendNotification(
-                      NotificationModel.fromJson(myJson),
-                      state.currentUserModel.id);
-                  getNotifications(context);
-                },
-                child: Icon(Icons.add),
-              );
-            } else {
-              return Container();
-            }
-          },
-        ),
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              SearchBar(
-                onChanged: (String text) async {
-                  //TODO: implement here
+    return Scaffold(
+      floatingActionButton:
+          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (BuildContext context, AuthenticationState state) {
+          if (state is Authenticated) {
+            return FloatingActionButton(
+              onPressed: () async {
+                //TODO: create bloc for sending notifications
+                await notificationCardRepository.sendNotification(
+                    NotificationModel.fromJson(myJson),
+                    state.currentUserModel.id);
+                getNotifications(context);
+              },
+              child: Icon(Icons.add),
+            );
+          } else {
+            return Container();
+          }
+        },
+      ),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            SearchBar(
+              onChanged: (String text) async {
+                //TODO: implement here
+              },
+            ),
+            Expanded(
+              child: BlocBuilder<NotificationBloc, NotificationState>(
+                builder: (BuildContext context, NotificationState state) {
+                  if (state is AvailableNotifications) {
+                    return RefreshIndicator(
+                      child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: state.notifications.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return NotificationCard(
+                            notificationModel:
+                                state.notifications.elementAt(index),
+                          );
+                        },
+                      ),
+                      onRefresh: () async {
+                        getNotifications(context);
+                      },
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
                 },
               ),
-              Expanded(
-                child: BlocBuilder<NotificationBloc, NotificationState>(
-                  builder: (BuildContext context, NotificationState state) {
-                    if (state is AvailableNotifications) {
-                      return RefreshIndicator(
-                        child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          itemCount: state.notifications.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return NotificationCard(
-                              notificationModel:
-                                  state.notifications.elementAt(index),
-                            );
-                          },
-                        ),
-                        onRefresh: () async {
-                          getNotifications(context);
-                        },
-                      );
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
   }
 
   void getNotifications(BuildContext context) {
-    notificationBloc
-      ..add(
-        GetNotifications(
-          BlocProvider.of<AuthenticationBloc>(context)
-              .authenticationRepository
-              .currentUser
-              .followings,
-        ),
-      );
+    BlocProvider.of<NotificationBloc>(context).add(
+      GetNotifications(
+        BlocProvider.of<AuthenticationBloc>(context)
+            .authenticationRepository
+            .currentUser
+            .followings,
+      ),
+    );
   }
 }

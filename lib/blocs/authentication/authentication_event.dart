@@ -21,3 +21,9 @@ class UnAuthenticate extends AuthenticationEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetUpdatedUser extends AuthenticationEvent {
+
+  @override
+  List<Object> get props => [];
+}

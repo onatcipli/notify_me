@@ -41,5 +41,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+    <string>${PRODUCT_NAME} needs camera usage to scan qrcode</string>
 </dict>
 </plist>

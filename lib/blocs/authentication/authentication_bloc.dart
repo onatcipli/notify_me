@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/repositories/authentication_repository.dart';
+import 'package:notify_me/repositories/user_repository.dart';
 import './bloc.dart';
 
 class AuthenticationBloc
@@ -27,6 +28,11 @@ class AuthenticationBloc
     if (event is UnAuthenticate) {
       authenticationRepository.signOut();
       yield UnAuthenticated();
+    }
+    if (event is GetUpdatedUser) {
+      authenticationRepository.currentUser = await FirebaseUserRepository()
+          .getUser(authenticationRepository.currentUser.id);
+      yield Authenticated(authenticationRepository.currentUser);
     }
   }
 }

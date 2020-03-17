@@ -31,37 +31,39 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      child: Scaffold(
-        body: TabBarView(
-          children: <Widget>[
-            Home(),
-            ScanQRCode(),
-          ],
-          dragStartBehavior: DragStartBehavior.down,
-        ),
-        bottomNavigationBar: TabBar(
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(
-                  Icons.notifications_active,
-                  color: _selectedIndex == 0 ? Colors.black : Colors.black45,
-                  size: 40,
-                ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.scanner,
-                  color: _selectedIndex == 1 ? Colors.black : Colors.black45,
-                  size: 40,
-                ),
-              ),
+      child: SafeArea(
+        child: Scaffold(
+          body: TabBarView(
+            children: <Widget>[
+              Home(),
+              ScanQRCode(),
             ],
-            indicator: UnderlineTabIndicator(
-              borderSide: BorderSide(width: 0),
-            ),
-            onTap: (idx) => setState(() {
-                  _selectedIndex = idx;
-                })),
+            dragStartBehavior: DragStartBehavior.down,
+          ),
+          bottomNavigationBar: TabBar(
+              tabs: <Widget>[
+                Tab(
+                  icon: Icon(
+                    Icons.notifications_active,
+                    color: _selectedIndex == 0 ? Colors.black : Colors.black45,
+                    size: 40,
+                  ),
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.scanner,
+                    color: _selectedIndex == 1 ? Colors.black : Colors.black45,
+                    size: 40,
+                  ),
+                ),
+              ],
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(width: 0),
+              ),
+              onTap: (idx) => setState(() {
+                    _selectedIndex = idx;
+                  })),
+        ),
       ),
       length: 2,
       initialIndex: _selectedIndex,

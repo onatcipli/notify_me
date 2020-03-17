@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notify_me/blocs/authentication/bloc.dart';
+import 'package:notify_me/blocs/notification/bloc.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQRCode extends StatefulWidget {
@@ -7,9 +10,18 @@ class ScanQRCode extends StatefulWidget {
 }
 
 class _ScanQRCodeState extends State<ScanQRCode> {
+  AuthenticationBloc _auth;
+  NotificationBloc _notificationBloc;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController _controller;
   String qrText;
+
+  @override
+  void initState() {
+    _auth = BlocProvider.of<AuthenticationBloc>(context);
+    _notificationBloc = BlocProvider.of<NotificationBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +70,10 @@ class _ScanQRCodeState extends State<ScanQRCode> {
   void _onQRViewCreated(QRViewController controller) {
     this._controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      qrText = scanData;
+      if (_auth.state is Authenticated) {
+        String userId = (_auth.state as Authenticated).currentUserModel.id;
+        _notificationBloc.add(AddFollowing(scanData, userId));
+      }
     });
   }
 

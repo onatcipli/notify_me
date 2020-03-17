@@ -12,3 +12,13 @@ class GetNotifications extends NotificationEvent {
   @override
   List<Object> get props => [followings];
 }
+
+class AddFollowing extends NotificationEvent {
+  final String followingId;
+  final String userId;
+
+  AddFollowing(this.followingId, this.userId);
+
+  @override
+  List<Object> get props => [followingId, userId];
+}
