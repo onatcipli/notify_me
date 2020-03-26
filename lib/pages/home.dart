@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
-import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
+import 'notifications.dart';
 
 class Home extends StatelessWidget {
   static final AbstractNotificationCardRepository notificationCardRepository =
@@ -19,12 +19,8 @@ class Home extends StatelessWidget {
         builder: (BuildContext context, AuthenticationState state) {
           if (state is Authenticated) {
             return FloatingActionButton(
-              onPressed: () async {
-                //TODO: create bloc for sending notifications
-                await notificationCardRepository.sendNotification(
-                    NotificationModel.fromJson(myJson),
-                    state.currentUserModel.id);
-                getNotifications(context);
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
               },
               child: Icon(Icons.add),
             );
