@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:notify_me/pages/home.dart';
-import 'package:notify_me/pages/scan_code.dart';
+import 'package:notify_me/pages/profile.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           body: TabBarView(
             children: <Widget>[
               Home(),
-              ScanQRCode(),
+              ProfilePage(),
             ],
             dragStartBehavior: DragStartBehavior.down,
           ),
@@ -51,7 +51,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 ),
                 Tab(
                   icon: Icon(
-                    Icons.scanner,
+                    Icons.person,
                     color: _selectedIndex == 1 ? Colors.black : Colors.black45,
                     size: 40,
                   ),

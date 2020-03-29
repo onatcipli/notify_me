@@ -73,6 +73,7 @@ class _ScanQRCodeState extends State<ScanQRCode> {
       if (_auth.state is Authenticated) {
         String userId = (_auth.state as Authenticated).currentUserModel.id;
         _notificationBloc.add(AddFollowing(scanData, userId));
+        Navigator.pop(context);
       }
     });
   }
