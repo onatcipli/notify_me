@@ -41,7 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-    <string>${PRODUCT_NAME} needs camera usage to scan qrcode</string>
+    <key>NSCameraUsageDescription</key>
+	<string>${PRODUCT_NAME} needs camera usage to scan qrcode</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
 </dict>
 </plist>

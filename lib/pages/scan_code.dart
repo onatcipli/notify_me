@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 
 class ScanQRCode extends StatefulWidget {
   @override
@@ -32,17 +33,21 @@ class _ScanQRCodeState extends State<ScanQRCode> {
           'Takip Et',
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            width: width,
-            height: width,
-            top: (MediaQuery.of(context).size.height - width) / 6,
-            left: (MediaQuery.of(context).size.width - width) / 2,
+      body: Column(
+        children: <Widget>[
+          Expanded(
             child: QRView(
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
+              overlay: QrScannerOverlayShape(
+                borderColor: Colors.red,
+                borderRadius: 10,
+                borderLength: 30,
+                borderWidth: 10,
+                cutOutSize: 300,
+              ),
             ),
+            flex: 4,
           ),
         ],
       ),
@@ -67,15 +72,25 @@ class _ScanQRCodeState extends State<ScanQRCode> {
     }
   }
 
+  String currentData;
+
   void _onQRViewCreated(QRViewController controller) {
     this._controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      if (_auth.state is Authenticated) {
-        String userId = (_auth.state as Authenticated).currentUserModel.id;
-        _notificationBloc.add(AddFollowing(scanData, userId));
-        Navigator.pop(context);
+      controller.pauseCamera();
+      if (currentData != scanData) {
+        currentData = scanData;
+        handleAddFollowing(scanData);
       }
     });
+  }
+
+  void handleAddFollowing(String scanData) {
+    if (_auth.state is Authenticated) {
+      String userId = (_auth.state as Authenticated).currentUserModel.id;
+      _notificationBloc.add(AddFollowing(scanData, userId));
+      Navigator.pop(context);
+    }
   }
 
   @override
