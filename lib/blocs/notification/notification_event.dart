@@ -4,6 +4,15 @@ abstract class NotificationEvent extends Equatable {
   const NotificationEvent();
 }
 
+class SearchNotifications extends NotificationEvent {
+  final String key;
+
+  SearchNotifications(this.key);
+
+  @override
+  List<Object> get props => [key];
+}
+
 class GetNotifications extends NotificationEvent {
   final List<String> followings;
 
