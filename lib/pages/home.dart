@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
+import 'package:notify_me/pages/profile.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
@@ -20,7 +21,10 @@ class Home extends StatelessWidget {
           if (state is Authenticated) {
             return FloatingActionButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
+                if(state.currentUserModel.id.isEmpty)
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                else
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
               },
               child: Icon(Icons.add),
             );
