@@ -11,6 +11,7 @@ String notificationModelToJson(NotificationModel data) =>
 class NotificationModel {
   String id;
   String ownerId;
+  String ownerTitle;
   String title;
   String subTitle;
   String profileImageUrl;
@@ -20,6 +21,7 @@ class NotificationModel {
   NotificationModel({
     this.id,
     this.ownerId,
+    this.ownerTitle,
     this.title,
     this.subTitle,
     this.profileImageUrl,
@@ -31,8 +33,9 @@ class NotificationModel {
       NotificationModel(
         id: json["id"],
         ownerId: json["ownerId"],
+        ownerTitle: json["ownerTitle"] ?? 'no-title',
         title: json["title"],
-          subTitle: json["subTitle"],
+        subTitle: json["subTitle"],
         profileImageUrl: json["profileImageUrl"],
         time: json["time"],
         content: json["content"] == null
@@ -45,8 +48,9 @@ class NotificationModel {
       NotificationModel(
         id: snapshot.data["id"] ?? snapshot.documentID,
         ownerId: snapshot.data["ownerId"],
+        ownerTitle: snapshot.data["ownerTitle"] ?? 'no-title',
         title: snapshot.data["title"],
-          subTitle: snapshot.data["subTitle"],
+        subTitle: snapshot.data["subTitle"],
         profileImageUrl: snapshot.data["profileImageUrl"],
         time: (snapshot.data["time"] as Timestamp).toDate(),
         content: snapshot.data["content"] == null
@@ -58,6 +62,7 @@ class NotificationModel {
   Map<String, dynamic> toJson() => {
         "id": id,
         "ownerId": ownerId,
+        "ownerTitle": ownerTitle ?? 'no-title',
         "title": title,
         "subTitle": subTitle,
         "profileImageUrl": profileImageUrl,
@@ -94,11 +99,12 @@ class Content {
 }
 
 final myJson = {
-    "id": null,
-    "ownerId": "NTobBLj8BiIusEzkja3y",
-    "title": "ilk notification",
-    "subTitle": "Merhaba arkadaşlar bugün sizlere ilk notificationuumuzuuuu atiyorum, iyi akşamlar.",
-    "profileImageUrl": 'https://i.picsum.photos/id/718/200/300.jpg',
-    "time": DateTime.now(),
-    "content": []
+  "id": null,
+  "ownerId": "NTobBLj8BiIusEzkja3y",
+  "title": "ilk notification",
+  "subTitle":
+      "Merhaba arkadaşlar bugün sizlere ilk notificationuumuzuuuu atiyorum, iyi akşamlar.",
+  "profileImageUrl": 'https://i.picsum.photos/id/718/200/300.jpg',
+  "time": DateTime.now(),
+  "content": []
 };

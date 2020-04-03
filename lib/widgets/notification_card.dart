@@ -40,8 +40,8 @@ class NotificationCard extends StatelessWidget {
                       Text(
                         //TODO : change with username
                         notificationModel.title.length > 10
-                            ? '@' + notificationModel.title.substring(0, 10)
-                            : '@' + notificationModel.title,
+                            ? '@' + notificationModel.ownerTitle.substring(0, 10)
+                            : '@' + notificationModel.ownerTitle,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.black54),
                       ),

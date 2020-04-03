@@ -38,6 +38,7 @@ class Home extends StatelessWidget {
           children: <Widget>[
             SearchBar(
               onChanged: (String text) async {
+                BlocProvider.of<NotificationBloc>(context).add(SearchNotifications(text));
                 //TODO: implement here
               },
             ),
