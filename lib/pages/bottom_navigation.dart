@@ -1,7 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:notify_me/pages/home.dart';
 import 'package:notify_me/pages/profile.dart';
+import 'package:notify_me/shared/noti_icons_icons.dart';
+import 'package:notify_me/widgets/bottom.navi.bar.dart';
+
+import 'home.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -30,44 +32,44 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      child: SafeArea(
-        child: Scaffold(
-          body: TabBarView(
-            children: <Widget>[
-              Home(),
-              ProfilePage(),
-            ],
-            dragStartBehavior: DragStartBehavior.down,
-          ),
-          bottomNavigationBar: TabBar(
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(
-                    Icons.notifications_active,
-                    color: _selectedIndex == 0 ? Colors.black : Colors.black45,
-                    size: 40,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.person,
-                    color: _selectedIndex == 1 ? Colors.black : Colors.black45,
-                    size: 40,
-                  ),
-                ),
-              ],
-              indicator: UnderlineTabIndicator(
-                borderSide: BorderSide(width: 0),
-              ),
-              onTap: (idx) => setState(() {
-                    _selectedIndex = idx;
-                  })),
-        ),
+    return Scaffold(
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _selectedIndex,
+        backgroundColor: Colors.white,
+        showElevation: true,
+        // use this to remove appBar's elevation
+        onItemSelected: (index) => setState(() {
+          _selectedIndex = index;
+          _pageController.animateToPage(index,
+              duration: Duration(milliseconds: 300), curve: Curves.ease);
+        }),
+        items: [
+          BottomNavyBarItem(
+              icon: Icon(NotiIcons.compass_1),
+              title: Text('Explore'),
+              activeColor: Theme.of(context).accentColor,
+              inactiveColor: Colors.grey.withOpacity(.5)),
+          BottomNavyBarItem(
+              icon: Icon(NotiIcons.profile),
+              title: Text('Profile'),
+              activeColor: Theme.of(context).accentColor,
+              inactiveColor: Colors.grey.withOpacity(.5)),
+        ],
       ),
-      length: 2,
-      initialIndex: _selectedIndex,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() => _selectedIndex = index);
+        },
+        children: <Widget>[
+          SafeArea(
+            child: Home(),
+          ),
+          SafeArea(
+            child: ProfilePage(),
+          ),
+        ],
+      ),
     );
-    ;
   }
 }
