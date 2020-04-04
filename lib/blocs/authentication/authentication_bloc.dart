@@ -34,5 +34,9 @@ class AuthenticationBloc
           .getUser(authenticationRepository.currentUser.id);
       yield Authenticated(authenticationRepository.currentUser);
     }
+    if (event is UpdateUser) {
+      await FirebaseUserRepository().updateUser(event.userModel);
+      add(GetUpdatedUser());
+    }
   }
 }
