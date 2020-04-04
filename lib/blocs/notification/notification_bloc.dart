@@ -54,7 +54,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         }
       });
     }
-    yield AvailableNotifications(searchedNotifications);
+    yield AvailableNotifications(searchedNotifications, userNotificationList);
   }
 
   Stream<NotificationState> handleAddFollowing(AddFollowing event) async* {
@@ -72,7 +72,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     yield state is AvailableNotifications
         ? (state as AvailableNotifications)
             .copyWith(notificationModels: lastNotificationList)
-        : AvailableNotifications(lastNotificationList);
+        : AvailableNotifications(lastNotificationList, userNotificationList);
   }
 
   Stream<NotificationState> handleGetUserNotifications(
