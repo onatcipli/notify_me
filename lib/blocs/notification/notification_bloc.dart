@@ -24,28 +24,66 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     NotificationEvent event,
   ) async* {
     if (event is GetNotifications) {
-      if (!(state is AvailableNotifications)) yield Loading();
-      lastNotificationList = await notificationCardRepository
-          .getNotificationModels(event.followings);
-      yield state is AvailableNotifications
-          ? (state as AvailableNotifications).copyWith(
-              notificationModels: lastNotificationList,
-              currentUserNotificationModels: userNotificationList)
-          : AvailableNotifications(lastNotificationList, userNotificationList);
+      yield* handleGetNotifications(event);
     } else if (event is AddFollowing) {
-      yield Loading();
-      UserModel model = await FirebaseUserRepository()
-          .addFollowing(event.userId, event.followingId);
-      add(GetNotifications(model.followings));
+      yield* handleAddFollowing(event);
+    } else if (event is SearchNotifications) {
+      yield* handleSearchNotifications(event);
     } else if (event is GetUserNotifications) {
-      yield Loading();
-      userNotificationList = await notificationCardRepository
-          .getNotificationModels([event.currentUserId]);
-      yield state is AvailableNotifications
-          ? (state as AvailableNotifications).copyWith(
-              notificationModels: lastNotificationList,
-              currentUserNotificationModels: userNotificationList)
-          : AvailableNotifications(lastNotificationList, userNotificationList);
+      yield* handleGetUserNotifications(event);
     }
+  }
+
+  Stream<NotificationState> handleGetUserNotifications(
+      GetUserNotifications event) async* {
+    yield Loading();
+    userNotificationList = await notificationCardRepository
+        .getNotificationModels([event.currentUserId]);
+    yield state is AvailableNotifications
+        ? (state as AvailableNotifications).copyWith(
+            notificationModels: lastNotificationList,
+            currentUserNotificationModels: userNotificationList)
+        : AvailableNotifications(lastNotificationList, userNotificationList);
+  }
+
+  Stream<NotificationState> handleSearchNotifications(
+      SearchNotifications event) async* {
+    bool _check1 = (event.key != null && event.key.isNotEmpty);
+    bool _check = (state is AvailableNotifications &&
+        (state as AvailableNotifications).notifications?.length != 0);
+    List<NotificationModel> searchedNotifications = [];
+    if (event.key.isEmpty) {
+      searchedNotifications = lastNotificationList;
+    }
+    if (_check1 && _check) {
+      (state as AvailableNotifications).notifications.forEach((current) {
+        if (current.subTitle.toLowerCase().contains(event.key.toLowerCase()) ||
+            current.title.toLowerCase().contains(event.key.toLowerCase()) ||
+            current.ownerTitle
+                .toLowerCase()
+                .contains(event.key.toLowerCase())) {
+          searchedNotifications.add(current);
+        }
+      });
+    }
+    yield AvailableNotifications(searchedNotifications);
+  }
+
+  Stream<NotificationState> handleAddFollowing(AddFollowing event) async* {
+    yield Loading();
+    UserModel model = await FirebaseUserRepository()
+        .addFollowing(event.userId, event.followingId);
+    add(GetNotifications(model.followings));
+  }
+
+  Stream<NotificationState> handleGetNotifications(
+      GetNotifications event) async* {
+    if (!(state is AvailableNotifications)) yield Loading();
+    lastNotificationList = await notificationCardRepository
+        .getNotificationModels(event.followings);
+    yield state is AvailableNotifications
+        ? (state as AvailableNotifications)
+            .copyWith(notificationModels: lastNotificationList)
+        : AvailableNotifications(lastNotificationList);
   }
 }
