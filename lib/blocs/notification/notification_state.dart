@@ -12,13 +12,16 @@ class Loading extends NotificationState {
 
 class AvailableNotifications extends NotificationState {
   final List<NotificationModel> notifications;
+  final List<NotificationModel> currentUserNotifications;
 
-  AvailableNotifications(this.notifications);
+  AvailableNotifications(this.notifications, this.currentUserNotifications);
 
   AvailableNotifications copyWith(
-          {List<NotificationModel> notificationModels}) =>
-      new AvailableNotifications(notificationModels ?? notifications);
+          {List<NotificationModel> notificationModels,
+          List<NotificationModel> currentUserNotificationModels}) =>
+      new AvailableNotifications(notificationModels ?? notifications,
+          currentUserNotificationModels ?? currentUserNotifications);
 
   @override
-  List<Object> get props => [notifications];
+  List<Object> get props => [notifications, currentUserNotifications];
 }

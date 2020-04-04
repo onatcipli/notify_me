@@ -3,10 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
+import 'package:notify_me/blocs/notification/bloc.dart';
 import 'package:notify_me/pages/scan_code.dart';
 import 'package:notify_me/widgets/linear_gradient_background_image.dart';
+import 'package:notify_me/widgets/notification_card.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -25,6 +28,11 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  initState() {
+    super.initState();
+    getNotifications(context);
+  }
+
   bool isEditMode = false;
   TextEditingController _titleController = TextEditingController();
 
@@ -36,12 +44,52 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (BuildContext context, AuthenticationState state) {
       if (state is Authenticated) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ScanQRCode()));
-            },
-            child: Icon(Icons.code),
+          floatingActionButton: SpeedDial(
+            animatedIcon: AnimatedIcons.menu_close,
+            overlayColor: Colors.black,
+            overlayOpacity: 0.3,
+            shape: CircleBorder(),
+            children: [
+              SpeedDialChild(
+                  child: Icon(Icons.photo_camera),
+                  label: 'Scan QR',
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ScanQRCode()))),
+              SpeedDialChild(
+                child: Icon(Icons.code),
+                label: 'Show QR',
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      content: Container(
+                        width: size.width / 2,
+                        height: size.width / 2,
+                        child: Center(
+                          child: QrImage(
+                            data: state.currentUserModel.id,
+                            version: QrVersions.auto,
+                            size: size.width / 2,
+                            errorStateBuilder: (cxt, err) {
+                              return Container(
+                                child: Center(
+                                  child: Text(
+                                    "Unable to create QR Code is generated.",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
           body: Container(
             height: size.height,
@@ -165,7 +213,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             onPressed: () {
                               if (isEditMode &&
                                   state.currentUserModel.title !=
-                                      _titleController.text) {
+                                      _titleController.text && _titleController.text.isNotEmpty) {
                                 state.currentUserModel.title =
                                     _titleController.text;
                                 BlocProvider.of<AuthenticationBloc>(context)
@@ -183,29 +231,56 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 100),
-                      child: QrImage(
-                        data: state.currentUserModel.id,
-                        version: QrVersions.auto,
-                        size: 200.0,
-                        errorStateBuilder: (cxt, err) {
-                          return Container(
-                            child: Center(
-                              child: Text(
-                                "Unable to create QR Code is generated.",
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                Expanded(
+                  child: BlocBuilder<NotificationBloc, NotificationState>(
+                    builder: (BuildContext context, NotificationState state) {
+                      if (state is AvailableNotifications &&
+                          state.currentUserNotifications != null) {
+                        return RefreshIndicator(
+                          child: ListView.builder(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemCount: state.currentUserNotifications.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return NotificationCard(
+                                notificationModel: state
+                                    .currentUserNotifications
+                                    .elementAt(index),
+                              );
+                            },
+                          ),
+                          onRefresh: () async {
+                            getNotifications(context);
+                          },
+                        );
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
                 ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: <Widget>[
+                //     Padding(
+                //       padding: const EdgeInsets.only(top: 100),
+                //       child: QrImage(
+                //         data: state.currentUserModel.id,
+                //         version: QrVersions.auto,
+                //         size: 200.0,
+                //         errorStateBuilder: (cxt, err) {
+                //           return Container(
+                //             child: Center(
+                //               child: Text(
+                //                 "Unable to create QR Code is generated.",
+                //                 textAlign: TextAlign.center,
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -237,5 +312,16 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           )
         : child;
+  }
+
+  void getNotifications(BuildContext context) {
+    BlocProvider.of<NotificationBloc>(context).add(
+      GetUserNotifications(
+        BlocProvider.of<AuthenticationBloc>(context)
+            .authenticationRepository
+            .currentUser
+            .id,
+      ),
+    );
   }
 }

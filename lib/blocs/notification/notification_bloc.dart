@@ -11,6 +11,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   final AbstractNotificationCardRepository notificationCardRepository;
 
   List<NotificationModel> lastNotificationList;
+  List<NotificationModel> userNotificationList;
   AuthenticationBloc auth;
 
   NotificationBloc(this.notificationCardRepository, this.auth);
@@ -27,14 +28,24 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       lastNotificationList = await notificationCardRepository
           .getNotificationModels(event.followings);
       yield state is AvailableNotifications
-          ? (state as AvailableNotifications)
-              .copyWith(notificationModels: lastNotificationList)
-          : AvailableNotifications(lastNotificationList);
+          ? (state as AvailableNotifications).copyWith(
+              notificationModels: lastNotificationList,
+              currentUserNotificationModels: userNotificationList)
+          : AvailableNotifications(lastNotificationList, userNotificationList);
     } else if (event is AddFollowing) {
       yield Loading();
       UserModel model = await FirebaseUserRepository()
           .addFollowing(event.userId, event.followingId);
       add(GetNotifications(model.followings));
+    } else if (event is GetUserNotifications) {
+      yield Loading();
+      userNotificationList = await notificationCardRepository
+          .getNotificationModels([event.currentUserId]);
+      yield state is AvailableNotifications
+          ? (state as AvailableNotifications).copyWith(
+              notificationModels: lastNotificationList,
+              currentUserNotificationModels: userNotificationList)
+          : AvailableNotifications(lastNotificationList, userNotificationList);
     }
   }
 }
