@@ -27,23 +27,11 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       yield* handleGetNotifications(event);
     } else if (event is AddFollowing) {
       yield* handleAddFollowing(event);
-    } else if (event is SearchNotifications) {
-      yield* handleSearchNotifications(event);
     } else if (event is GetUserNotifications) {
       yield* handleGetUserNotifications(event);
+    } else if (event is SearchNotifications) {
+      yield* handleSearchNotifications(event);
     }
-  }
-
-  Stream<NotificationState> handleGetUserNotifications(
-      GetUserNotifications event) async* {
-    yield Loading();
-    userNotificationList = await notificationCardRepository
-        .getNotificationModels([event.currentUserId]);
-    yield state is AvailableNotifications
-        ? (state as AvailableNotifications).copyWith(
-            notificationModels: lastNotificationList,
-            currentUserNotificationModels: userNotificationList)
-        : AvailableNotifications(lastNotificationList, userNotificationList);
   }
 
   Stream<NotificationState> handleSearchNotifications(
@@ -85,5 +73,17 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         ? (state as AvailableNotifications)
             .copyWith(notificationModels: lastNotificationList)
         : AvailableNotifications(lastNotificationList);
+  }
+
+  Stream<NotificationState> handleGetUserNotifications(
+      GetUserNotifications event) async* {
+    yield Loading();
+    userNotificationList = await notificationCardRepository
+        .getNotificationModels([event.currentUserId]);
+    yield state is AvailableNotifications
+        ? (state as AvailableNotifications).copyWith(
+            notificationModels: lastNotificationList,
+            currentUserNotificationModels: userNotificationList)
+        : AvailableNotifications(lastNotificationList, userNotificationList);
   }
 }
