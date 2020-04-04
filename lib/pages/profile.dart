@@ -52,12 +52,28 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               SpeedDialChild(
                   child: Icon(Icons.photo_camera),
-                  label: 'Scan QR',
+                  labelWidget: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Scan QR",
+                        style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white),
+                      ),
+                    ),
+                  ),
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ScanQRCode()))),
               SpeedDialChild(
                 child: Icon(Icons.code),
-                label: 'Show QR',
+                labelWidget: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Show QR",
+                      style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white),
+                    ),
+                  ),
+                ),
                 onTap: () => showDialog(
                   context: context,
                   builder: (context) {
@@ -213,7 +229,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             onPressed: () {
                               if (isEditMode &&
                                   state.currentUserModel.title !=
-                                      _titleController.text && _titleController.text.isNotEmpty) {
+                                      _titleController.text &&
+                                  _titleController.text.isNotEmpty) {
                                 state.currentUserModel.title =
                                     _titleController.text;
                                 BlocProvider.of<AuthenticationBloc>(context)
