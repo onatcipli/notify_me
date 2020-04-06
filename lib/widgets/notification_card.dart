@@ -33,14 +33,17 @@ class NotificationCard extends StatelessWidget {
                         height: 70,
                         width: 70,
                         child: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(notificationModel.profileImageUrl),
+                          backgroundImage: notificationModel.profileImageUrl ==
+                                  null
+                              ? AssetImage("images/default-profile.png")
+                              : NetworkImage(notificationModel.profileImageUrl),
                         ),
                       ),
                       Text(
                         //TODO : change with username
                         notificationModel.title.length > 10
-                            ? '@' + notificationModel.ownerTitle.substring(0, 10)
+                            ? '@' +
+                                notificationModel.ownerTitle.substring(0, 10)
                             : '@' + notificationModel.ownerTitle,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.black54),
