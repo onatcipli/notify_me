@@ -275,29 +275,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: <Widget>[
-                //     Padding(
-                //       padding: const EdgeInsets.only(top: 100),
-                //       child: QrImage(
-                //         data: state.currentUserModel.id,
-                //         version: QrVersions.auto,
-                //         size: 200.0,
-                //         errorStateBuilder: (cxt, err) {
-                //           return Container(
-                //             child: Center(
-                //               child: Text(
-                //                 "Unable to create QR Code is generated.",
-                //                 textAlign: TextAlign.center,
-                //               ),
-                //             ),
-                //           );
-                //         },
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),
