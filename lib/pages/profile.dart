@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
+import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/pages/scan_code.dart';
 import 'package:notify_me/widgets/linear_gradient_background_image.dart';
 import 'package:notify_me/widgets/notification_card.dart';
@@ -19,13 +21,43 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   File _image;
+  FirebaseStorage firebaseStorage =
+      FirebaseStorage(storageBucket: 'gs://notifyme-2c420.appspot.com');
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  bool _isUploadingImage = false;
 
-    setState(() {
-      _image = image;
-    });
+  Future getImage(UserModel currentUserModel) async {
+    _image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (_image != null) {
+      StorageReference storageReference = await FirebaseStorage.instance
+          .ref()
+          .child('users/${currentUserModel.id}/pp.jpeg');
+      StorageUploadTask putFile = storageReference.putFile(_image);
+      putFile.events.listen((StorageTaskEvent event) async {
+        switch (event.type) {
+          case StorageTaskEventType.resume:
+          case StorageTaskEventType.progress:
+            setState(() {
+              _isUploadingImage = true;
+            });
+            break;
+          case StorageTaskEventType.pause:
+          case StorageTaskEventType.failure:
+            setState(() {
+              _isUploadingImage = false;
+            });
+            break;
+          case StorageTaskEventType.success:
+            setState(() {
+              _isUploadingImage = false;
+            });
+            var downloadURL = await storageReference.getDownloadURL();
+            currentUserModel.profileUrl = downloadURL;
+            BlocProvider.of<AuthenticationBloc>(context)
+                .add(UpdateUser(currentUserModel));
+        }
+      });
+    }
   }
 
   initState() {
@@ -57,7 +89,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Scan QR",
-                        style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
                       ),
                     ),
                   ),
@@ -70,7 +103,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Show QR",
-                      style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white),
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic, color: Colors.white),
                     ),
                   ),
                 ),
@@ -181,13 +215,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                           borderSide:
                                               BorderSide(color: Colors.grey),
                                           onPressed: () {
-                                            getImage();
+                                            getImage(state.currentUserModel);
                                           },
-                                          child: Text(
-                                            "Choose Image",
-                                            style: TextStyle(
-                                                color: Colors.grey[600]),
-                                          ),
+                                          child: _isUploadingImage
+                                              ? Center(child: CircularProgressIndicator())
+                                              : Text(
+                                                  "Choose Image",
+                                                  style: TextStyle(
+                                                      color: Colors.grey[600]),
+                                                ),
                                         ),
                                       ),
                                   ],
