@@ -42,20 +42,27 @@ class BottomNavyBar extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: bgColor,
         boxShadow: [
-          if (showElevation)
-            const BoxShadow(
+          BoxShadow(
               color: Colors.black12,
-              blurRadius: 2,
-            ),
+              blurRadius: 15.0,
+              offset: Offset(1, -0.2),
+              spreadRadius: -5),
+          BoxShadow(
+              color: Colors.black12,
+              blurRadius: 15.0,
+              offset: Offset(-1, -0.2),
+              spreadRadius: -5)
         ],
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(13), topRight: Radius.circular(13)),
       ),
-      child: Container(
-        width: double.infinity,
-        height: 80,
-        color: Theme.of(context).primaryColorDark,
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      width: double.infinity,
+      height: 88,
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+      child: Material(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(13), topRight: Radius.circular(13)),
         child: Column(
           children: <Widget>[
             Row(
@@ -76,7 +83,9 @@ class BottomNavyBar extends StatelessWidget {
                 );
               }).toList(),
             ),
-            SizedBox(height: 16,)
+            SizedBox(
+              height: 16,
+            )
           ],
         ),
       ),
@@ -124,31 +133,34 @@ class _ItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            IconTheme(
-              data: IconThemeData(
-                size: iconSize,
-                color: isSelected
-                    ? item.activeColor.withOpacity(1)
-                    : item.inactiveColor == null
-                        ? item.activeColor
-                        : item.inactiveColor,
-              ),
-              child: item.icon,
-            ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: DefaultTextStyle.merge(
-                  style: TextStyle(
-                    color: isSelected ? item.activeColor : item.inactiveColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    fontStyle: FontStyle.italic
-                  ),
-                  maxLines: 1,
-                  textAlign: item.textAlign,
-                  child: item.title,
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: IconTheme(
+                data: IconThemeData(
+                  size: iconSize,
+                  color: isSelected
+                      ? item.activeColor.withOpacity(1)
+                      : item.inactiveColor == null
+                          ? item.activeColor
+                          : item.inactiveColor,
                 ),
+                child: item.icon,
               ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 4),
+              child: DefaultTextStyle.merge(
+                style: TextStyle(
+                  color: isSelected ? item.activeColor : item.inactiveColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10,
+                  fontStyle: FontStyle.italic,
+                ),
+                maxLines: 1,
+                textAlign: item.textAlign,
+                child: item.title,
+              ),
+            ),
           ],
         ),
       ),

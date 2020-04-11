@@ -1,6 +1,6 @@
 void main(List<String> args) {
-  print(
-      TimeCalculationHelper.getTime(DateTime.parse('2018-12-20 19:32:44.364'), 1));
+  print(TimeCalculationHelper.getTime(
+      DateTime.parse('2018-12-20 19:32:44.364'), 1));
   // print(
   //     TimeCalculationHelper.getTime(DateTime.parse('2019-12-31 19:32:44.364')));
   // print(
@@ -50,11 +50,8 @@ class TimeCalculationHelper {
     for (int i = 0; i < TimeProperty.values.length; i++) {
       int value = map[TimeProperty.values.elementAt(i)];
       if (value > 0) {
-        returnTime += value.toString() +
-            ' ' +
-            nameMap[TimeProperty.values.elementAt(i)] +
-            (value > 1 ? 's' : '') +
-            ' ';
+        returnTime +=
+            value.toString() + nameMap[TimeProperty.values.elementAt(i)] + ' ';
         cnt++;
       }
       if (cnt == depth) {
@@ -228,10 +225,10 @@ class TimeCalculationHelper {
 
 enum TimeProperty { year, month, week, day, hour, minute }
 Map<TimeProperty, String> nameMap = {
-  TimeProperty.year: 'year',
-  TimeProperty.month: 'month',
-  TimeProperty.week: 'week',
-  TimeProperty.day: 'day',
-  TimeProperty.hour: 'hour',
-  TimeProperty.minute: 'minute',
+  TimeProperty.year: 'y',
+  TimeProperty.month: 'm',
+  TimeProperty.week: 'w',
+  TimeProperty.day: 'd',
+  TimeProperty.hour: 'h',
+  TimeProperty.minute: 'm',
 };

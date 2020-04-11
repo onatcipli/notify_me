@@ -78,12 +78,17 @@ class _ProfilePageState extends State<ProfilePage> {
         return Scaffold(
           floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
+            animatedIconTheme:
+                IconThemeData(color: Theme.of(context).primaryColorLight),
+            backgroundColor: Colors.white,
             overlayColor: Colors.black,
             overlayOpacity: 0.3,
             shape: CircleBorder(),
             children: [
               SpeedDialChild(
-                  child: Icon(Icons.photo_camera),
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.photo_camera,
+                      color: Theme.of(context).primaryColorLight),
                   labelWidget: Container(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -97,7 +102,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ScanQRCode()))),
               SpeedDialChild(
-                child: Icon(Icons.code),
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.code,
+                  color: Theme.of(context).primaryColorLight,
+                ),
                 labelWidget: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -156,14 +165,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         FlatButton(
                           onPressed: () {},
-                          child: Text(
-                            state.currentUserModel.followings.length
-                                    .toString() +
-                                " following..",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 20),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              state.currentUserModel.followings.length
+                                      .toString() +
+                                  " \nfollowing..",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 20),
+                            ),
                           ),
                         ),
                         Positioned(
@@ -191,6 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 new Radius.circular(
                                                     size.width / 5)),
                                             image: DecorationImage(
+                                              fit: BoxFit.fill,
                                               image: state.currentUserModel
                                                           .profileUrl !=
                                                       null
@@ -214,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   ),
                                                 ),
                                                 borderSide: BorderSide(
-                                                    color: Colors.grey),
+                                                    color: Colors.white),
                                                 onPressed: () {
                                                   getImage(
                                                       state.currentUserModel);
@@ -222,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 child: Text(
                                                   "Choose Image",
                                                   style: TextStyle(
-                                                      color: Colors.grey[600]),
+                                                      color: Colors.white),
                                                 ),
                                               ),
                                       ),
@@ -330,8 +343,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.all(Radius.circular(90)),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
-                    sigmaX: 2.0,
-                    sigmaY: 2.0,
+                    sigmaX: 3.0,
+                    sigmaY: 3.0,
                   ),
                   child: Container(
                     color: Colors.transparent,
