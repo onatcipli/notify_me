@@ -261,7 +261,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: IconButton(
                             iconSize: 30,
                             icon: Icon(isEditMode ? Icons.check : Icons.edit),
-                            color: Colors.white,
                             onPressed: () {
                               if (isEditMode &&
                                   state.currentUserModel.title !=
