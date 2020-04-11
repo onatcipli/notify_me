@@ -43,6 +43,8 @@
 	<false/>
     <key>NSCameraUsageDescription</key>
 	<string>${PRODUCT_NAME} needs camera usage to scan qrcode</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access photos</string>
     <key>io.flutter.embedded_views_preview</key>
     <true/>
 </dict>

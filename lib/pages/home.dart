@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
+import 'package:notify_me/pages/notifications.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
-import 'notifications.dart';
 
 class Home extends StatelessWidget {
   static final AbstractNotificationCardRepository notificationCardRepository =
@@ -13,6 +13,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton:
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -20,7 +21,25 @@ class Home extends StatelessWidget {
           if (state is Authenticated) {
             return FloatingActionButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
+                // if(state.currentUserModel.id.isEmpty)
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                // else
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
+
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: Material(
+                        child: Container(
+                            width: size.width - 20,
+                            height: size.height / 2 - size.height / 7,
+                            color: Colors.white,
+                            child: CreateNotification(state: state)),
+                      ),
+                    );
+                  },
+                );
               },
               child: Icon(Icons.add),
             );
@@ -34,7 +53,8 @@ class Home extends StatelessWidget {
           children: <Widget>[
             SearchBar(
               onChanged: (String text) async {
-                BlocProvider.of<NotificationBloc>(context).add(SearchNotifications(text));
+                BlocProvider.of<NotificationBloc>(context)
+                    .add(SearchNotifications(text));
                 //TODO: implement here
               },
             ),

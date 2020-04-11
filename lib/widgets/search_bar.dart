@@ -23,25 +23,22 @@ class SearchBar extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                color: Colors.black12.withOpacity(0.1),
+                border: Border.all(color: Colors.grey[300]),
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+                color: Colors.white,
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: TextField(
                   decoration: InputDecoration(
+                    hintText: "Search",
+                    hintStyle: TextStyle(color: Colors.grey[300], fontStyle: FontStyle.italic),
                     icon: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Icon(Icons.search),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "search",
-                          style: TextStyle(
-                            color: Colors.black54,
-                          ),
+                        Icon(
+                          Icons.search,
+                          color: Colors.grey[300],
                         ),
                       ],
                     ),

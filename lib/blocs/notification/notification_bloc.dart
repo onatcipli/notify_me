@@ -1,18 +1,17 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/repositories/user_repository.dart';
-
 import './bloc.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   final AbstractNotificationCardRepository notificationCardRepository;
 
   List<NotificationModel> lastNotificationList;
+  List<NotificationModel> userNotificationList;
   AuthenticationBloc auth;
 
   NotificationBloc(this.notificationCardRepository, this.auth);
@@ -28,6 +27,8 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       yield* handleGetNotifications(event);
     } else if (event is AddFollowing) {
       yield* handleAddFollowing(event);
+    } else if (event is GetUserNotifications) {
+      yield* handleGetUserNotifications(event);
     } else if (event is SearchNotifications) {
       yield* handleSearchNotifications(event);
     }
@@ -53,7 +54,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         }
       });
     }
-    yield AvailableNotifications(searchedNotifications);
+    yield AvailableNotifications(searchedNotifications, userNotificationList);
   }
 
   Stream<NotificationState> handleAddFollowing(AddFollowing event) async* {
@@ -71,6 +72,18 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     yield state is AvailableNotifications
         ? (state as AvailableNotifications)
             .copyWith(notificationModels: lastNotificationList)
-        : AvailableNotifications(lastNotificationList);
+        : AvailableNotifications(lastNotificationList, userNotificationList);
+  }
+
+  Stream<NotificationState> handleGetUserNotifications(
+      GetUserNotifications event) async* {
+    yield Loading();
+    userNotificationList = await notificationCardRepository
+        .getNotificationModels([event.currentUserId]);
+    yield state is AvailableNotifications
+        ? (state as AvailableNotifications).copyWith(
+            notificationModels: lastNotificationList,
+            currentUserNotificationModels: userNotificationList)
+        : AvailableNotifications(lastNotificationList, userNotificationList);
   }
 }
