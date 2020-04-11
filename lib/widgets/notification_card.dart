@@ -100,7 +100,7 @@ class NotificationCard extends StatelessWidget {
                   ),
                   Text(
                     TimeCalculationHelper.getTime(notificationModel.time, 1),
-                    style: Theme.of(context).textTheme.caption.copyWith(color: Colors.white),
+                    style: Theme.of(context).textTheme.caption,
                   ),
                 ],
               ),
