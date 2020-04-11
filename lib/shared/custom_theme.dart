@@ -9,11 +9,15 @@ const onPrimary = Color(0xff30E3CA);
 ThemeData customTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: lightPrimary,
   backgroundColor: lightPrimary,
+  appBarTheme: AppBarTheme(
+    color: darkPrimary,
+  ),
   primaryColorDark: darkPrimary,
   primaryColor: lightPrimary,
   primaryColorLight: secondaryLight,
   iconTheme: IconThemeData(color: secondaryLight),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: onPrimary),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(backgroundColor: onPrimary),
   primaryIconTheme: IconThemeData.fallback().copyWith(color: secondaryLight),
   colorScheme: ColorScheme.fromSwatch(
       backgroundColor: lightPrimary,
@@ -22,7 +26,6 @@ ThemeData customTheme = ThemeData.light().copyWith(
       cardColor: lightPrimary,
       errorColor: secondaryLight,
       brightness: Brightness.light,
-      primarySwatch: Colors.blue
-  ),
+      primarySwatch: Colors.blue),
 );
 /**/
