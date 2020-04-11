@@ -45,15 +45,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
         }),
         items: [
           BottomNavyBarItem(
-              icon: Icon(NotiIcons.compass_1),
-              title: Text('Explore'),
-              activeColor: Theme.of(context).accentColor,
-              inactiveColor: Colors.grey.withOpacity(.5)),
+            icon: Icon(NotiIcons.compass_1),
+            title: Text('Explore'),
+            activeColor: Theme.of(context).primaryColorLight,
+            inactiveColor: Theme.of(context).primaryColor.withOpacity(.5),
+          ),
           BottomNavyBarItem(
-              icon: Icon(NotiIcons.profile),
-              title: Text('Profile'),
-              activeColor: Theme.of(context).accentColor,
-              inactiveColor: Colors.grey.withOpacity(.5)),
+            icon: Icon(NotiIcons.profile),
+            title: Text('Profile'),
+            activeColor: Theme.of(context).primaryColorLight,
+            inactiveColor: Theme.of(context).primaryColor.withOpacity(.5),
+          ),
         ],
       ),
       body: PageView(
@@ -62,9 +64,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           setState(() => _selectedIndex = index);
         },
         children: <Widget>[
-          SafeArea(
-            child: Home(),
-          ),
+          Home(),
           SafeArea(
             child: ProfilePage(),
           ),

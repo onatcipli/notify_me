@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:notify_me/models/notification_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:notify_me/helper/time_calculation.dart';
+import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/pages/notification_detail_page.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -42,10 +43,11 @@ class NotificationCard extends StatelessWidget {
                           height: 70,
                           width: 70,
                           child: CircleAvatar(
-                            backgroundImage: notificationModel.profileImageUrl ==
-                                    null
-                                ? AssetImage("images/default-profile.png")
-                                : NetworkImage(notificationModel.profileImageUrl),
+                            backgroundImage:
+                                notificationModel.profileImageUrl == null
+                                    ? AssetImage("images/default-profile.png")
+                                    : NetworkImage(
+                                        notificationModel.profileImageUrl),
                           ),
                         ),
                         Text(
@@ -88,8 +90,7 @@ class NotificationCard extends StatelessWidget {
               bottom: 8,
               right: 8,
               child: Text(
-                notificationModel.time.minute.toString() + 'm',
-                style: Theme.of(context).textTheme.caption,
+                TimeCalculationHelper.getTime(notificationModel.time, 1),
               ),
             )
           ],

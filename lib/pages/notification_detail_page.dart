@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notify_me/helper/time_calculation.dart';
 import 'package:notify_me/models/notification_model.dart';
 
 class NotificationDetailPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class NotificationDetailPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                notificationModel.time.minute.toString() + 'm',
+                TimeCalculationHelper.getTime(notificationModel.time, 1),
                 style: Theme.of(context).textTheme.caption.copyWith(color: Colors.white),
               ),
             ),
@@ -62,7 +63,10 @@ class NotificationDetailPage extends StatelessWidget {
                           width: MediaQuery.of(context).size.height / 6,
                           child: CircleAvatar(
                             backgroundImage:
-                            NetworkImage(notificationModel.profileImageUrl),
+                            notificationModel.profileImageUrl == null
+                                ? AssetImage("images/default-profile.png")
+                                : NetworkImage(
+                                notificationModel.profileImageUrl),
                           ),
                         ),
                       ),

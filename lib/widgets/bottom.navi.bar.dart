@@ -37,7 +37,7 @@ class BottomNavyBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bgColor = (backgroundColor == null)
-        ? Theme.of(context).bottomAppBarColor
+        ? Theme.of(context).primaryColorLight
         : backgroundColor;
 
     return Container(
@@ -51,29 +51,33 @@ class BottomNavyBar extends StatelessWidget {
             ),
         ],
       ),
-      child: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: 65,
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-          child: Row(
-            mainAxisAlignment: mainAxisAlignment,
-            children: items.map((item) {
-              final index = items.indexOf(item);
-              return GestureDetector(
-                onTap: () => onItemSelected(index),
-                child: _ItemWidget(
-                  item: item,
-                  iconSize: iconSize,
-                  isSelected: index == selectedIndex,
-                  backgroundColor: bgColor,
-                  itemCornerRadius: itemCornerRadius,
-                  animationDuration: animationDuration,
-                  curve: curve,
-                ),
-              );
-            }).toList(),
-          ),
+      child: Container(
+        width: double.infinity,
+        height: 80,
+        color: Theme.of(context).primaryColorDark,
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: mainAxisAlignment,
+              children: items.map((item) {
+                final index = items.indexOf(item);
+                return GestureDetector(
+                  onTap: () => onItemSelected(index),
+                  child: _ItemWidget(
+                    item: item,
+                    iconSize: iconSize,
+                    isSelected: index == selectedIndex,
+                    backgroundColor: bgColor,
+                    itemCornerRadius: itemCornerRadius,
+                    animationDuration: animationDuration,
+                    curve: curve,
+                  ),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 16,)
+          ],
         ),
       ),
     );

@@ -31,13 +31,13 @@ class TimeCalculationHelper {
     DateTime now = DateTime.now();
     Map<TimeProperty, int> map = Map();
     int cnt = 0;
-    print(TimeProperty.values.length);
-    print(map.entries.length);
+    //print(TimeProperty.values.length);
+    //print(map.entries.length);
     while (map.entries.length != TimeProperty.values.length) {
       DateTime calc =
           _addTime(time, 1, TimeProperty.values.elementAt(map.entries.length));
-      print('--------------- Calculated Time ---------------------');
-      print(calc);
+      //print('--------------- Calculated Time ---------------------');
+      //print(calc);
       if (calc.compareTo(now) <= 0) {
         cnt = cnt + 1;
         time = calc;

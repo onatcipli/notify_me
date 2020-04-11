@@ -48,43 +48,46 @@ class Home extends StatelessWidget {
           }
         },
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            SearchBar(
+      body: Column(
+        children: <Widget>[
+          Container(
+            color: Theme.of(context).primaryColorDark,
+            padding: const EdgeInsets.fromLTRB(8, 32, 8, 0),
+            child: SearchBar(
               onChanged: (String text) async {
                 BlocProvider.of<NotificationBloc>(context)
                     .add(SearchNotifications(text));
                 //TODO: implement here
               },
             ),
-            Expanded(
-              child: BlocBuilder<NotificationBloc, NotificationState>(
-                builder: (BuildContext context, NotificationState state) {
-                  if (state is AvailableNotifications) {
-                    return RefreshIndicator(
-                      child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemCount: state.notifications.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return NotificationCard(
-                            notificationModel:
-                                state.notifications.elementAt(index),
-                          );
-                        },
-                      ),
-                      onRefresh: () async {
-                        getNotifications(context);
+          ),
+          Expanded(
+            child: BlocBuilder<NotificationBloc, NotificationState>(
+              builder: (BuildContext context, NotificationState state) {
+                if (state is AvailableNotifications) {
+                  return RefreshIndicator(
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(8),
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemCount: state.notifications.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return NotificationCard(
+                          notificationModel:
+                              state.notifications.elementAt(index),
+                        );
                       },
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
-            )
-          ],
-        ),
+                    ),
+                    onRefresh: () async {
+                      getNotifications(context);
+                    },
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          )
+        ],
       ),
     );
   }

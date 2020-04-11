@@ -18,6 +18,10 @@ class CreateNotification extends StatelessWidget {
 
   CreateNotification({Key key, this.state}) : super(key: key);
 
+  String nullCheck(String string){
+    return string ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -72,11 +76,11 @@ class CreateNotification extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              state.currentUserModel.title.length > 10
+                              nullCheck(state.currentUserModel.title).length > 10
                                   ? '@' +
                                       state.currentUserModel.title
                                           .substring(0, 10)
-                                  : '@' + state.currentUserModel.title,
+                                  : '@' + nullCheck(state.currentUserModel.title),
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(color: Colors.black54),
                             ),
