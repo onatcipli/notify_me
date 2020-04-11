@@ -203,28 +203,28 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         )),
                                     if (isEditMode)
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            16, 62, 0, 0),
-                                        child: OutlineButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              50.0,
-                                            ),
-                                          ),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                          onPressed: () {
-                                            getImage(state.currentUserModel);
-                                          },
-                                          child: _isUploadingImage
-                                              ? Center(child: CircularProgressIndicator())
-                                              : Text(
+                                      Center(
+                                        child: _isUploadingImage
+                                            ? CircularProgressIndicator()
+                                            : OutlineButton(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    50.0,
+                                                  ),
+                                                ),
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey),
+                                                onPressed: () {
+                                                  getImage(
+                                                      state.currentUserModel);
+                                                },
+                                                child: Text(
                                                   "Choose Image",
                                                   style: TextStyle(
                                                       color: Colors.grey[600]),
                                                 ),
-                                        ),
+                                              ),
                                       ),
                                   ],
                                 ),
