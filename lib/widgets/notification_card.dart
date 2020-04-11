@@ -89,8 +89,20 @@ class NotificationCard extends StatelessWidget {
             Positioned(
               bottom: 8,
               right: 8,
-              child: Text(
-                TimeCalculationHelper.getTime(notificationModel.time, 1),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.query_builder,
+                    size: 15,
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Text(
+                    TimeCalculationHelper.getTime(notificationModel.time, 1),
+                    style: Theme.of(context).textTheme.caption.copyWith(color: Colors.white),
+                  ),
+                ],
               ),
             )
           ],
