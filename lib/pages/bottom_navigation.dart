@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notify_me/pages/profile.dart';
 import 'package:notify_me/shared/noti_icons_icons.dart';
 import 'package:notify_me/widgets/bottom.navi.bar.dart';
+import 'package:notify_me/helper/app_localization.dart';
 
 import 'home.dart';
 
@@ -46,13 +47,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
         items: [
           BottomNavyBarItem(
             icon: Icon(NotiIcons.compass_1),
-            title: Text('Explore'),
+            title: Text(AppLocalizations.of(context).translate('explore')),
             activeColor: Theme.of(context).primaryColorLight,
             inactiveColor: Theme.of(context).primaryColor.withOpacity(.5),
           ),
           BottomNavyBarItem(
             icon: Icon(NotiIcons.profile),
-            title: Text('Profile'),
+            title: Text(AppLocalizations.of(context).translate('profile')),
             activeColor: Theme.of(context).primaryColorLight,
             inactiveColor: Theme.of(context).primaryColor.withOpacity(.5),
           ),
