@@ -7,7 +7,7 @@ const secondaryDark = Color(0xff3FC1C9);
 const onPrimary = Color(0xff30E3CA);
 
 ThemeData customTheme = ThemeData.light().copyWith(
-  scaffoldBackgroundColor: lightPrimary,
+  scaffoldBackgroundColor: Colors.white,
   backgroundColor: lightPrimary,
   appBarTheme: AppBarTheme(
     color: darkPrimary,

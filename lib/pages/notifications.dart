@@ -19,7 +19,7 @@ class CreateNotification extends StatelessWidget {
 
   CreateNotification({Key key, this.state}) : super(key: key);
 
-  String nullCheck(String string){
+  String nullCheck(String string) {
     return string ?? '';
   }
 
@@ -73,15 +73,18 @@ class CreateNotification extends StatelessWidget {
                                         null
                                     ? AssetImage('images/default-profile.png')
                                     : NetworkImage(
-                                        "https://i.picsum.photos/id/718/200/300.jpg"),
+                                        state.currentUserModel.profileUrl,
+                                      ),
                               ),
                             ),
                             Text(
-                              nullCheck(state.currentUserModel.title).length > 10
+                              nullCheck(state.currentUserModel.title).length >
+                                      10
                                   ? '@' +
                                       state.currentUserModel.title
                                           .substring(0, 10)
-                                  : '@' + nullCheck(state.currentUserModel.title),
+                                  : '@' +
+                                      nullCheck(state.currentUserModel.title),
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(color: Colors.black54),
                             ),
@@ -158,7 +161,8 @@ class CreateNotification extends StatelessWidget {
                   50.0,
                 ),
               ),
-              borderSide: BorderSide(color: Theme.of(context).accentColor),
+              borderSide:
+                  BorderSide(color: Theme.of(context).primaryColorLight),
               onPressed: () async {
                 if (titleController.text.isNotEmpty &&
                     subTitleController.text.isNotEmpty) {
@@ -191,7 +195,7 @@ class CreateNotification extends StatelessWidget {
               },
               child: Text(
                 AppLocalizations.of(context).translate('share'),
-                style: TextStyle(color: Theme.of(context).accentColor),
+                style: TextStyle(color: Theme.of(context).primaryColorLight),
               ),
             ),
           )

@@ -20,6 +20,8 @@ class Home extends StatelessWidget {
         builder: (BuildContext context, AuthenticationState state) {
           if (state is Authenticated) {
             return FloatingActionButton(
+              backgroundColor: Colors.white,
+              foregroundColor: Theme.of(context).primaryColorLight,
               onPressed: () {
                 // if(state.currentUserModel.id.isEmpty)
                 //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
@@ -41,7 +43,10 @@ class Home extends StatelessWidget {
                   },
                 );
               },
-              child: Icon(Icons.add),
+              child: Icon(
+                Icons.add,
+                color: Theme.of(context).primaryColorLight,
+              ),
             );
           } else {
             return Container();
@@ -51,7 +56,7 @@ class Home extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Container(
-            color: Theme.of(context).primaryColorDark,
+            color: Theme.of(context).scaffoldBackgroundColor,
             padding: const EdgeInsets.fromLTRB(8, 32, 8, 0),
             child: SearchBar(
               onChanged: (String text) async {
