@@ -1,6 +1,6 @@
 void main(List<String> args) {
-  print(
-      TimeCalculationHelper.getTime(DateTime.parse('2018-12-20 19:32:44.364'), 1));
+  print(TimeCalculationHelper.getTime(
+      DateTime.parse('2018-12-20 19:32:44.364'), 1));
   // print(
   //     TimeCalculationHelper.getTime(DateTime.parse('2019-12-31 19:32:44.364')));
   // print(
@@ -31,13 +31,13 @@ class TimeCalculationHelper {
     DateTime now = DateTime.now();
     Map<TimeProperty, int> map = Map();
     int cnt = 0;
-    print(TimeProperty.values.length);
-    print(map.entries.length);
+    //print(TimeProperty.values.length);
+    //print(map.entries.length);
     while (map.entries.length != TimeProperty.values.length) {
       DateTime calc =
           _addTime(time, 1, TimeProperty.values.elementAt(map.entries.length));
-      print('--------------- Calculated Time ---------------------');
-      print(calc);
+      //print('--------------- Calculated Time ---------------------');
+      //print(calc);
       if (calc.compareTo(now) <= 0) {
         cnt = cnt + 1;
         time = calc;
@@ -50,10 +50,8 @@ class TimeCalculationHelper {
     for (int i = 0; i < TimeProperty.values.length; i++) {
       int value = map[TimeProperty.values.elementAt(i)];
       if (value > 0) {
-        returnTime += value.toString() +
-            ' ' +
-            nameMap[TimeProperty.values.elementAt(i)] +
-            ' ';
+        returnTime +=
+            value.toString() + nameMap[TimeProperty.values.elementAt(i)] + ' ';
         cnt++;
       }
       if (cnt == depth) {
@@ -228,9 +226,9 @@ class TimeCalculationHelper {
 enum TimeProperty { year, month, week, day, hour, minute }
 Map<TimeProperty, String> nameMap = {
   TimeProperty.year: 'y',
-  TimeProperty.month: 'a',
-  TimeProperty.week: 'h',
-  TimeProperty.day: 'g',
-  TimeProperty.hour: 'd',
-  TimeProperty.minute: 'd',
+  TimeProperty.month: 'm',
+  TimeProperty.week: 'w',
+  TimeProperty.day: 'd',
+  TimeProperty.hour: 'h',
+  TimeProperty.minute: 'm',
 };

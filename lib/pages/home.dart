@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
-import 'package:notify_me/pages/profile.dart';
+import 'package:notify_me/pages/notifications.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
-import 'notifications.dart';
 
 class Home extends StatelessWidget {
   static final AbstractNotificationCardRepository notificationCardRepository =
@@ -14,61 +13,86 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton:
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (BuildContext context, AuthenticationState state) {
           if (state is Authenticated) {
             return FloatingActionButton(
+              backgroundColor: Colors.white,
+              foregroundColor: Theme.of(context).primaryColorLight,
               onPressed: () {
-                if(state.currentUserModel.id.isEmpty)
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
-                else
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
+                // if(state.currentUserModel.id.isEmpty)
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                // else
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
+
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: Material(
+                        child: Container(
+                            width: size.width - 20,
+                            height: size.height / 2 - size.height / 7,
+                            color: Colors.white,
+                            child: CreateNotification(state: state)),
+                      ),
+                    );
+                  },
+                );
               },
-              child: Icon(Icons.add),
+              child: Icon(
+                Icons.add,
+                color: Theme.of(context).primaryColorLight,
+              ),
             );
           } else {
             return Container();
           }
         },
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            SearchBar(
+      body: Column(
+        children: <Widget>[
+          Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            padding: const EdgeInsets.fromLTRB(8, 32, 8, 0),
+            child: SearchBar(
               onChanged: (String text) async {
-                BlocProvider.of<NotificationBloc>(context).add(SearchNotifications(text));
+                BlocProvider.of<NotificationBloc>(context)
+                    .add(SearchNotifications(text));
                 //TODO: implement here
               },
             ),
-            Expanded(
-              child: BlocBuilder<NotificationBloc, NotificationState>(
-                builder: (BuildContext context, NotificationState state) {
-                  if (state is AvailableNotifications) {
-                    return RefreshIndicator(
-                      child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemCount: state.notifications.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return NotificationCard(
-                            notificationModel:
-                                state.notifications.elementAt(index),
-                          );
-                        },
-                      ),
-                      onRefresh: () async {
-                        getNotifications(context);
+          ),
+          Expanded(
+            child: BlocBuilder<NotificationBloc, NotificationState>(
+              builder: (BuildContext context, NotificationState state) {
+                if (state is AvailableNotifications) {
+                  return RefreshIndicator(
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(8),
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemCount: state.notifications.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return NotificationCard(
+                          notificationModel:
+                              state.notifications.elementAt(index),
+                        );
                       },
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
-            )
-          ],
-        ),
+                    ),
+                    onRefresh: () async {
+                      getNotifications(context);
+                    },
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          )
+        ],
       ),
     );
   }

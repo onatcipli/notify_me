@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
+import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/pages/scan_code.dart';
 import 'package:notify_me/widgets/linear_gradient_background_image.dart';
 import 'package:notify_me/widgets/notification_card.dart';
@@ -19,13 +21,43 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   File _image;
+  FirebaseStorage firebaseStorage =
+      FirebaseStorage(storageBucket: 'gs://notifyme-2c420.appspot.com');
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  bool _isUploadingImage = false;
 
-    setState(() {
-      _image = image;
-    });
+  Future getImage(UserModel currentUserModel) async {
+    _image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (_image != null) {
+      StorageReference storageReference = await FirebaseStorage.instance
+          .ref()
+          .child('users/${currentUserModel.id}/pp.jpeg');
+      StorageUploadTask putFile = storageReference.putFile(_image);
+      putFile.events.listen((StorageTaskEvent event) async {
+        switch (event.type) {
+          case StorageTaskEventType.resume:
+          case StorageTaskEventType.progress:
+            setState(() {
+              _isUploadingImage = true;
+            });
+            break;
+          case StorageTaskEventType.pause:
+          case StorageTaskEventType.failure:
+            setState(() {
+              _isUploadingImage = false;
+            });
+            break;
+          case StorageTaskEventType.success:
+            setState(() {
+              _isUploadingImage = false;
+            });
+            var downloadURL = await storageReference.getDownloadURL();
+            currentUserModel.profileUrl = downloadURL;
+            BlocProvider.of<AuthenticationBloc>(context)
+                .add(UpdateUser(currentUserModel));
+        }
+      });
+    }
   }
 
   initState() {
@@ -46,31 +78,42 @@ class _ProfilePageState extends State<ProfilePage> {
         return Scaffold(
           floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
+            animatedIconTheme:
+                IconThemeData(color: Theme.of(context).primaryColorLight),
+            backgroundColor: Colors.white,
             overlayColor: Colors.black,
             overlayOpacity: 0.3,
             shape: CircleBorder(),
             children: [
               SpeedDialChild(
-                  child: Icon(Icons.photo_camera),
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.photo_camera,
+                      color: Theme.of(context).primaryColorLight),
                   labelWidget: Container(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Scan QR",
-                        style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
                       ),
                     ),
                   ),
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ScanQRCode()))),
               SpeedDialChild(
-                child: Icon(Icons.code),
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.code,
+                  color: Theme.of(context).primaryColorLight,
+                ),
                 labelWidget: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Show QR",
-                      style: TextStyle(fontStyle: FontStyle.italic, color: Colors.white),
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic, color: Colors.white),
                     ),
                   ),
                 ),
@@ -122,14 +165,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         FlatButton(
                           onPressed: () {},
-                          child: Text(
-                            state.currentUserModel.followings.length
-                                    .toString() +
-                                " following..",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 20),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              state.currentUserModel.followings.length
+                                      .toString() +
+                                  " \nfollowing..",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 20),
+                            ),
                           ),
                         ),
                         Positioned(
@@ -157,6 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 new Radius.circular(
                                                     size.width / 5)),
                                             image: DecorationImage(
+                                              fit: BoxFit.fill,
                                               image: state.currentUserModel
                                                           .profileUrl !=
                                                       null
@@ -169,26 +216,28 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         )),
                                     if (isEditMode)
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            16, 62, 0, 0),
-                                        child: OutlineButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              50.0,
-                                            ),
-                                          ),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                          onPressed: () {
-                                            getImage();
-                                          },
-                                          child: Text(
-                                            "Choose Image",
-                                            style: TextStyle(
-                                                color: Colors.grey[600]),
-                                          ),
-                                        ),
+                                      Center(
+                                        child: _isUploadingImage
+                                            ? CircularProgressIndicator()
+                                            : OutlineButton(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    50.0,
+                                                  ),
+                                                ),
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
+                                                onPressed: () {
+                                                  getImage(
+                                                      state.currentUserModel);
+                                                },
+                                                child: Text(
+                                                  "Choose Image",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
                                       ),
                                   ],
                                 ),
@@ -225,7 +274,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: IconButton(
                             iconSize: 30,
                             icon: Icon(isEditMode ? Icons.check : Icons.edit),
-                            color: Colors.white,
                             onPressed: () {
                               if (isEditMode &&
                                   state.currentUserModel.title !=
@@ -275,29 +323,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: <Widget>[
-                //     Padding(
-                //       padding: const EdgeInsets.only(top: 100),
-                //       child: QrImage(
-                //         data: state.currentUserModel.id,
-                //         version: QrVersions.auto,
-                //         size: 200.0,
-                //         errorStateBuilder: (cxt, err) {
-                //           return Container(
-                //             child: Center(
-                //               child: Text(
-                //                 "Unable to create QR Code is generated.",
-                //                 textAlign: TextAlign.center,
-                //               ),
-                //             ),
-                //           );
-                //         },
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),
@@ -318,8 +343,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.all(Radius.circular(90)),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
-                    sigmaX: 2.0,
-                    sigmaY: 2.0,
+                    sigmaX: 3.0,
+                    sigmaY: 3.0,
                   ),
                   child: Container(
                     color: Colors.transparent,
