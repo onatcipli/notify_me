@@ -53,7 +53,6 @@ class TimeCalculationHelper {
         returnTime += value.toString() +
             ' ' +
             nameMap[TimeProperty.values.elementAt(i)] +
-            (value > 1 ? 's' : '') +
             ' ';
         cnt++;
       }
@@ -228,10 +227,10 @@ class TimeCalculationHelper {
 
 enum TimeProperty { year, month, week, day, hour, minute }
 Map<TimeProperty, String> nameMap = {
-  TimeProperty.year: 'year',
-  TimeProperty.month: 'month',
-  TimeProperty.week: 'week',
-  TimeProperty.day: 'day',
-  TimeProperty.hour: 'hour',
-  TimeProperty.minute: 'minute',
+  TimeProperty.year: 'y',
+  TimeProperty.month: 'a',
+  TimeProperty.week: 'h',
+  TimeProperty.day: 'g',
+  TimeProperty.hour: 'd',
+  TimeProperty.minute: 'd',
 };
