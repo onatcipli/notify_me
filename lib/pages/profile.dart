@@ -174,6 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15)),
                                 content: Container(
+                                  height: size.height * .75,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -197,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                       Container(
                                         width: size.width / 2 + size.width / 3,
-                                        height: size.height - 250,
+                                        height: size.height / 2,
                                         child: FutureBuilder(
                                             future: FirebaseUserRepository()
                                                 .getFollowingUsers(state
@@ -218,7 +219,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               e.data['title'] ??
                                                                   'notifier',
                                                           followerCount: e.data[
-                                                                  'followerCount'],
+                                                              'followerCount'],
                                                           profilPicture: e.data[
                                                               'profileUrl'],
                                                         ),
