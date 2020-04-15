@@ -9,8 +9,12 @@ import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
 
 class Home extends StatelessWidget {
+  final Function directToProfileWithEditMode;
+
   static final AbstractNotificationCardRepository notificationCardRepository =
       FirebaseNotificationRepository();
+
+  const Home({Key key, this.directToProfileWithEditMode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +28,23 @@ class Home extends StatelessWidget {
               backgroundColor: Colors.white,
               foregroundColor: Theme.of(context).primaryColorLight,
               onPressed: () {
-                if(state.currentUserModel.title == null)
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(isEditMode: true)));
-                else
+                if (state.currentUserModel.title == null){
+                  directToProfileWithEditMode();
+                } else
                   showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Center(
-                      child: Material(
-                        child: Container(
-                            width: size.width - 20,
-                            height: size.height / 2 - size.height / 7,
-                            color: Colors.white,
-                            child: CreateNotification(state: state)),
-                      ),
-                    );
-                  },
-                );
+                    context: context,
+                    builder: (context) {
+                      return Center(
+                        child: Material(
+                          child: Container(
+                              width: size.width - 20,
+                              height: size.height / 2 - size.height / 7,
+                              color: Colors.white,
+                              child: CreateNotification(state: state)),
+                        ),
+                      );
+                    },
+                  );
               },
               child: Icon(
                 Icons.add,
