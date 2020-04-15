@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
 import 'package:notify_me/pages/notifications.dart';
+import 'package:notify_me/repositories/cloud_messaging_repository.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
@@ -25,26 +26,12 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    _firebaseMessaging = FirebaseMessaging();
+    _firebaseMessaging = CloudMessagingRepository().getMessaging();
     handleFirebase();
     super.initState();
   }
 
   void handleFirebase() async {
-    if (Platform.isIOS) {
-      bool permission = await _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true),
-      );
-    }
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      //TODO: save the token to current user document in Firestore
-    });
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -112,7 +99,9 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateNotification()));
+                        builder: (context) => CreateNotification(
+                              state: state,
+                            )));
               },
               child: Icon(
                 Icons.add,
