@@ -65,6 +65,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
         controller: _pageController,
         onPageChanged: (index) {
           setState(() => _selectedIndex = index);
+          if (_selectedIndex != 1) {
+            _isEditMode = false;
+          }
         },
         children: <Widget>[
           Home(
