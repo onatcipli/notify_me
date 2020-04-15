@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:notify_me/blocs/notification/bloc.dart';
 import 'package:notify_me/helper/app_localization.dart';
 import 'package:notify_me/models/user_model.dart';
 import 'package:notify_me/pages/scan_code.dart';
+import 'package:notify_me/repositories/user_repository.dart';
 import 'package:notify_me/widgets/linear_gradient_background_image.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -165,7 +167,78 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: Colors.white,
                         ),
                         FlatButton(
-                          onPressed: () {},
+                          onPressed: () => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                contentPadding: EdgeInsets.only(top: 20),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                content: Container(
+                                  height: size.height * .75,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 18.0),
+                                        child: Text(
+                                          state.currentUserModel.followings
+                                                  .length
+                                                  .toString() +
+                                              " \nfollowing..",
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic,
+                                              fontSize: 20,
+                                              color: Theme.of(context)
+                                                  .primaryColorDark),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Container(
+                                        width: size.width / 2 + size.width / 3,
+                                        height: size.height / 2,
+                                        child: FutureBuilder(
+                                            future: FirebaseUserRepository()
+                                                .getFollowingUsers(state
+                                                    .currentUserModel
+                                                    .followings),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasData) {
+                                                return GridView.count(
+                                                  crossAxisCount: 3,
+                                                  mainAxisSpacing: 10,
+                                                  children: snapshot
+                                                      .data.documents
+                                                      .map(
+                                                        (e) => FollowingContent(
+                                                          username:
+                                                              e.data['title'] ??
+                                                                  'notifier',
+                                                          followerCount: e.data[
+                                                              'followerCount'],
+                                                          profilPicture: e.data[
+                                                              'profileUrl'],
+                                                        ),
+                                                      )
+                                                      .toList(),
+                                                );
+                                              }
+                                              return Center(
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            }),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -365,6 +438,54 @@ class _ProfilePageState extends State<ProfilePage> {
             .currentUser
             .id,
       ),
+    );
+  }
+}
+
+class FollowingContent extends StatelessWidget {
+  const FollowingContent(
+      {this.profilPicture,
+      @required this.username,
+      @required this.followerCount});
+
+  final String profilPicture;
+  final String username;
+  final String followerCount;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Column(
+      children: <Widget>[
+        Container(
+          width: size.width / 6,
+          height: size.width / 6,
+          child: CircleAvatar(
+            backgroundImage: profilPicture == null
+                ? AssetImage('images/default-profile.png')
+                : NetworkImage(profilPicture),
+          ),
+        ),
+        SizedBox(
+          height: 3,
+        ),
+        Text(
+          '@' + username,
+          style: TextStyle(
+              fontSize: 14, color: Theme.of(context).primaryColorDark),
+        ),
+        SizedBox(
+          height: 3,
+        ),
+        Text(
+          followerCount ?? '0' + ' followers',
+          style: TextStyle(
+              fontSize: 12,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w300,
+              color: Theme.of(context).primaryColorDark),
+        )
+      ],
     );
   }
 }
