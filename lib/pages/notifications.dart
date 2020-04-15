@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
+import 'package:notify_me/helper/app_localization.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 
@@ -35,7 +36,7 @@ class CreateNotification extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  "Bildirim Oluştur",
+                  AppLocalizations.of(context).translate('createNoti'),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),
@@ -99,10 +100,10 @@ class CreateNotification extends StatelessWidget {
                               TextField(
                                 cursorColor: Colors.black,
                                 controller: titleController,
-                                decoration: const InputDecoration(
+                                decoration: new InputDecoration(
                                     contentPadding: EdgeInsets.all(0),
                                     isDense: true,
-                                    hintText: "What's happening?",
+                                    hintText: AppLocalizations.of(context).translate('whatsHappening'),
                                     hintStyle: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
@@ -112,9 +113,9 @@ class CreateNotification extends StatelessWidget {
                                 maxLines: 3,
                                 cursorColor: Colors.black,
                                 controller: subTitleController,
-                                decoration: const InputDecoration(
+                                decoration: new InputDecoration(
                                   contentPadding: EdgeInsets.only(top: 7),
-                                  hintText: "Give us same detail...",
+                                  hintText: AppLocalizations.of(context).translate('addStatement'),
                                   hintStyle: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -186,14 +187,14 @@ class CreateNotification extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        content: Text('Please fill in the blanks'),
+                        content: Text(AppLocalizations.of(context).translate('add')),
                       );
                     },
                   );
                 }
               },
               child: Text(
-                "Share",
+                AppLocalizations.of(context).translate('share'),
                 style: TextStyle(color: Theme.of(context).primaryColorLight),
               ),
             ),
