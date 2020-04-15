@@ -18,8 +18,14 @@ import 'package:notify_me/widgets/notification_card.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
+
+  bool isEditMode;
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(isEditMode);
+
+  ProfilePage({bool isEditMode = false}) {
+    this.isEditMode = isEditMode;
+  }
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -28,6 +34,12 @@ class _ProfilePageState extends State<ProfilePage> {
       FirebaseStorage(storageBucket: 'gs://notifyme-2c420.appspot.com');
 
   bool _isUploadingImage = false;
+
+  bool isEditMode;
+
+  _ProfilePageState(bool isEditMode) {
+    this.isEditMode = isEditMode;
+  }
 
   Future getImage(UserModel currentUserModel) async {
     _image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -68,7 +80,6 @@ class _ProfilePageState extends State<ProfilePage> {
     getNotifications(context);
   }
 
-  bool isEditMode = false;
   TextEditingController _titleController = TextEditingController();
 
   @override
@@ -138,7 +149,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               return Container(
                                 child: Center(
                                   child: Text(
-                                    AppLocalizations.of(context).translate('QRError'),
+                                    AppLocalizations.of(context)
+                                        .translate('QRError'),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -243,8 +255,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               state.currentUserModel.followings.length
-                                      .toString() + '\n' +
-                                AppLocalizations.of(context).translate('followings'),
+                                      .toString() +
+                                  '\n' +
+                                  AppLocalizations.of(context)
+                                      .translate('followings'),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontStyle: FontStyle.italic,
@@ -307,7 +321,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       state.currentUserModel);
                                                 },
                                                 child: Text(
-                                                  AppLocalizations.of(context).translate('chooseImage'),
+                                                  AppLocalizations.of(context)
+                                                      .translate('chooseImage'),
                                                   style: TextStyle(
                                                       color: Colors.white),
                                                 ),
@@ -326,7 +341,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                         cursorColor: Colors.red,
                                         controller: _titleController,
                                         decoration: new InputDecoration(
-                                          labelText: AppLocalizations.of(context).translate('name'),
+                                          labelText:
+                                              AppLocalizations.of(context)
+                                                  .translate('name'),
                                           labelStyle:
                                               TextStyle(color: Colors.grey),
                                         ),
@@ -334,7 +351,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     )
                                   : Text(
                                       state.currentUserModel.title == null
-                                          ? AppLocalizations.of(context).translate('name')
+                                          ? AppLocalizations.of(context)
+                                              .translate('name')
                                           : state.currentUserModel.title,
                                       style: TextStyle(
                                           fontSize: 25,
