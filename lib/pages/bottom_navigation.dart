@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:notify_me/helper/app_localization.dart';
 import 'package:notify_me/pages/profile.dart';
 import 'package:notify_me/shared/noti_icons_icons.dart';
 import 'package:notify_me/widgets/bottom.navi.bar.dart';
-import 'package:notify_me/helper/app_localization.dart';
 
 import 'home.dart';
 
@@ -18,6 +18,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   /// It help us to animate between pages when we are changing tabs
   PageController _pageController;
+
+  bool _isEditMode = false;
 
   @override
   void initState() {
@@ -63,11 +65,25 @@ class _BottomNavigationState extends State<BottomNavigation> {
         controller: _pageController,
         onPageChanged: (index) {
           setState(() => _selectedIndex = index);
+          if (_selectedIndex != 1) {
+            _isEditMode = false;
+          }
         },
         children: <Widget>[
-          Home(),
+          Home(
+            directToProfileWithEditMode: () {
+              setState(() {
+                _selectedIndex = 1;
+                _isEditMode = true;
+              });
+              _pageController.animateToPage(_selectedIndex,
+                  duration: Duration(milliseconds: 300), curve: Curves.ease);
+            },
+          ),
           SafeArea(
-            child: ProfilePage(),
+            child: ProfilePage(
+              isEditMode: _isEditMode,
+            ),
           ),
         ],
       ),

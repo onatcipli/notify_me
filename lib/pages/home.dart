@@ -3,13 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
 import 'package:notify_me/pages/notifications.dart';
+import 'package:notify_me/pages/profile.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
 
 class Home extends StatelessWidget {
+  final Function directToProfileWithEditMode;
+
   static final AbstractNotificationCardRepository notificationCardRepository =
       FirebaseNotificationRepository();
+
+  const Home({Key key, this.directToProfileWithEditMode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +28,23 @@ class Home extends StatelessWidget {
               backgroundColor: Colors.white,
               foregroundColor: Theme.of(context).primaryColorLight,
               onPressed: () {
-                // if(state.currentUserModel.id.isEmpty)
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
-                // else
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
-
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Center(
-                      child: Material(
-                        child: Container(
-                            width: size.width - 20,
-                            height: size.height / 2 - size.height / 7,
-                            color: Colors.white,
-                            child: CreateNotification(state: state)),
-                      ),
-                    );
-                  },
-                );
+                if (state.currentUserModel.title == null){
+                  directToProfileWithEditMode();
+                } else
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Center(
+                        child: Material(
+                          child: Container(
+                              width: size.width - 20,
+                              height: size.height / 2 - size.height / 7,
+                              color: Colors.white,
+                              child: CreateNotification(state: state)),
+                        ),
+                      );
+                    },
+                  );
               },
               child: Icon(
                 Icons.add,
