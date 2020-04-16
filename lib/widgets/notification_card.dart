@@ -11,7 +11,7 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = 115.0;
+    final height = 125.0;
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -40,8 +40,8 @@ class NotificationCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         Container(
-                          height: 70,
-                          width: 70,
+                          height: 80,
+                          width: 80,
                           child: CircleAvatar(
                             backgroundImage:
                                 notificationModel.profileImageUrl == null
@@ -57,14 +57,14 @@ class NotificationCard extends StatelessWidget {
                                   notificationModel.ownerTitle.substring(0, 10)
                               : '@' + notificationModel.ownerTitle,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.black54),
+                          style: Theme.of(context).textTheme.subhead,
                         ),
                       ],
                     ),
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -93,14 +93,16 @@ class NotificationCard extends StatelessWidget {
                 children: <Widget>[
                   Icon(
                     Icons.query_builder,
-                    size: 15,
+                    size: 25,
+                    color: Color(0xff26315F),
                   ),
                   SizedBox(
                     width: 2,
                   ),
                   Text(
                     TimeCalculationHelper.getTime(notificationModel.time, 1),
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.subhead,
+                    
                   ),
                 ],
               ),

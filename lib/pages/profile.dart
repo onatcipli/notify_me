@@ -93,16 +93,16 @@ class _ProfilePageState extends State<ProfilePage> {
           floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
             animatedIconTheme:
-                IconThemeData(color: Theme.of(context).primaryColorLight),
-            backgroundColor: Colors.white,
+                IconThemeData(color: Theme.of(context).primaryColor),
+            backgroundColor: Theme.of(context).primaryColorLight,
             overlayColor: Colors.black,
             overlayOpacity: 0.3,
             shape: CircleBorder(),
             children: [
               SpeedDialChild(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).primaryColorLight,
                   child: Icon(Icons.photo_camera,
-                      color: Theme.of(context).primaryColorLight),
+                      color: Theme.of(context).primaryColor),
                   labelWidget: Container(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -116,10 +116,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ScanQRCode()))),
               SpeedDialChild(
-                backgroundColor: Colors.white,
+                backgroundColor: Theme.of(context).primaryColorLight,
                 child: Icon(
                   Icons.code,
-                  color: Theme.of(context).primaryColorLight,
+                  color: Theme.of(context).primaryColor,
                 ),
                 labelWidget: Container(
                   child: Padding(

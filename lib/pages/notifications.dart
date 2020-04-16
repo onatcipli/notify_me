@@ -170,6 +170,7 @@ class CreateNotification extends StatelessWidget {
                     content: [],
                     id: null,
                     ownerId: state.currentUserModel.id,
+                    ownerTitle: state.currentUserModel.title,
                     title: titleController.text,
                     subTitle: subTitleController.text,
                     profileImageUrl: state.currentUserModel.profileUrl,

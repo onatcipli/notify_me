@@ -25,7 +25,7 @@ class Home extends StatelessWidget {
         builder: (BuildContext context, AuthenticationState state) {
           if (state is Authenticated) {
             return FloatingActionButton(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).primaryColorLight,
               foregroundColor: Theme.of(context).primaryColorLight,
               onPressed: () {
                 if (state.currentUserModel.title == null){
@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
               },
               child: Icon(
                 Icons.add,
-                color: Theme.of(context).primaryColorLight,
+                color: Theme.of(context).primaryColor,
               ),
             );
           } else {
@@ -75,7 +75,7 @@ class Home extends StatelessWidget {
                 if (state is AvailableNotifications) {
                   return RefreshIndicator(
                     child: ListView.builder(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.fromLTRB(8,8,8,16),
                       physics: AlwaysScrollableScrollPhysics(),
                       itemCount: state.notifications.length,
                       itemBuilder: (BuildContext context, int index) {
