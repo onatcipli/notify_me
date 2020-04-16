@@ -7,6 +7,8 @@ import 'package:notify_me/pages/login.dart';
 import 'package:notify_me/repositories/authentication_repository.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/shared/custom_theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:notify_me/helper/app_localization.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,6 +27,15 @@ class MyApp extends StatelessWidget {
         title: "NotifyMe",
         theme: customTheme,
         home: Login(),
+        supportedLocales: [
+          Locale('tr', 'TR'),
+          Locale('en', 'US'),
+        ],
+        localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       ),
       providers: [
         BlocProvider<AuthenticationBloc>(

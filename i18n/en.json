@@ -1,0 +1,15 @@
+{
+    "lang": "EN",
+    "explore": "Explore",
+    "profile": "Profile",
+    "share": "Share",
+    "addStatement": "Add Statement",
+    "whatsHappening": "What is happening?",
+    "createNoti": "Create Noti",
+    "scanQR":"Scan QR",
+    "showQR":"Show QR",
+    "QRError":"Unable to generate QR Code",
+    "followings":" followings...",
+    "chooseImage":"Choose Image",
+    "name":"Name"
+}

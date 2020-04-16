@@ -36,6 +36,12 @@ class FirebaseUserRepository extends AbstractUserRepository {
     return model;
   }
 
+  Future<QuerySnapshot> getFollowingUsers(List<String> ids) async {
+    var query =
+        Firestore.instance.collection(collectionName).where("id", whereIn: ids);
+    return await query.getDocuments();
+  }
+
   @override
   Future<UserModel> getUser(String userId) async {
     DocumentReference documentReference =
