@@ -1,15 +1,93 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
 import 'package:notify_me/pages/notifications.dart';
+import 'package:notify_me/repositories/cloud_messaging_repository.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 import 'package:notify_me/widgets/notification_card.dart';
 import 'package:notify_me/widgets/search_bar.dart';
 
-class Home extends StatelessWidget {
+import 'notifications.dart';
+
+class Home extends StatefulWidget {
+  final Function directToProfileWithEditMode;
   static final AbstractNotificationCardRepository notificationCardRepository =
       FirebaseNotificationRepository();
+
+  const Home({Key key, this.directToProfileWithEditMode}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState(directToProfileWithEditMode);
+}
+
+class _HomeState extends State<Home> {
+  final Function directToProfileWithEditMode;
+  FirebaseMessaging _firebaseMessaging;
+
+  _HomeState(this.directToProfileWithEditMode);
+
+
+  @override
+  void initState() {
+    _firebaseMessaging = CloudMessagingRepository().getMessaging();
+    handleFirebase();
+    super.initState();
+  }
+
+  void handleFirebase() async {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        _showItemDialog(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        //handleOnLaunch
+        _showItemDialog(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        //handleOnResume
+        _showItemDialog(message);
+      },
+    );
+  }
+
+  void _showItemDialog(Map<String, dynamic> message) {
+    showDialog<bool>(
+      context: context,
+      builder: (_) => _buildDialog(
+        context,
+        body: message['notification']['body'],
+        title: message['notification']['title'],
+      ),
+    ).then((bool shouldNavigate) {
+      if (shouldNavigate == true) {
+        //_navigateToItemDetail(message);
+      }
+    });
+  }
+
+  Widget _buildDialog(
+    BuildContext context, {
+    @required String title,
+    @required String body,
+  }) {
+    return AlertDialog(
+      title: Text(title),
+      content: Text(body),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('CLOSE'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +105,32 @@ class Home extends StatelessWidget {
                 //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
                 // else
                 //   Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
-
+if (state.currentUserModel.title == null){
+                  directToProfileWithEditMode();
+                } else {
                 showDialog(
                   context: context,
                   builder: (context) {
                     return Center(
                       child: Material(
+                        color: Colors.transparent,
                         child: Container(
                             width: size.width - 20,
-                            height: size.height / 2 - size.height / 7,
-                            color: Colors.white,
-                            child: CreateNotification(state: state)),
+                            height: size.height / 2 - size.height / 7 > 314
+                                ? size.height / 2 - size.height / 7
+                                : 314,
+                            color: Colors.transparent,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8))),
+                              child: CreateNotification(state: state),
+                            )),
                       ),
                     );
                   },
                 );
+              }
               },
               child: Icon(
                 Icons.add,

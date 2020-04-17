@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:notify_me/models/notification_model.dart';
+import 'package:notify_me/repositories/cloud_messaging_repository.dart';
 
 abstract class AbstractNotificationCardRepository {
   final String collectionName = 'notifications';
@@ -49,6 +50,10 @@ class FirebaseNotificationRepository
     notificationModel.id = documentReference.documentID;
     notificationModel.ownerId = ownerId;
     await documentReference.setData(notificationModel.toJson());
+    await CloudMessagingRepository().pushNotification(
+      model: notificationModel,
+      ownerId: ownerId,
+    );
     return documentReference;
   }
 }

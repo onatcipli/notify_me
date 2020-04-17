@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notify_me/blocs/authentication/bloc.dart';
 import 'package:notify_me/blocs/notification/bloc.dart';
+import 'package:notify_me/helper/app_localization.dart';
 import 'package:notify_me/models/notification_model.dart';
 import 'package:notify_me/repositories/notification_card_repository.dart';
 
@@ -26,7 +27,6 @@ class CreateNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height: size.height / 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -35,7 +35,7 @@ class CreateNotification extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  "Bildirim Oluştur",
+                  AppLocalizations.of(context).translate('createNoti'),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),
@@ -46,107 +46,115 @@ class CreateNotification extends StatelessWidget {
             height: 20,
           ),
           Container(
+            // TODO:Burada Tablette ağlarız bilginiz olsun ;)
             height: size.width / 3,
             child: Stack(
               children: <Widget>[
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  elevation: 3,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            Container(
-                              height: 80,
-                              width: 80,
-                              child: CircleAvatar(
-                                backgroundImage: state
-                                            .currentUserModel.profileUrl ==
-                                        null
-                                    ? AssetImage('images/default-profile.png')
-                                    : NetworkImage(
-                                        state.currentUserModel.profileUrl,
-                                      ),
-                              ),
-                            ),
-                            Text(
-                              nullCheck(state.currentUserModel.title).length >
-                                      10
-                                  ? '@' +
-                                      state.currentUserModel.title
-                                          .substring(0, 10)
-                                  : '@' +
-                                      nullCheck(state.currentUserModel.title),
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    elevation: 3,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              TextField(
-                                cursorColor: Colors.black,
-                                controller: titleController,
-                                decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.all(0),
-                                    isDense: true,
-                                    hintText: "What's happening?",
-                                    hintStyle: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                    border: InputBorder.none),
-                              ),
-                              TextField(
-                                maxLines: 3,
-                                cursorColor: Colors.black,
-                                controller: subTitleController,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.only(top: 7),
-                                  hintText: "Give us same detail...",
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                  border: InputBorder.none,
+                              Container(
+                                height: 80,
+                                width: 80,
+                                child: CircleAvatar(
+                                  backgroundImage: state
+                                              .currentUserModel.profileUrl ==
+                                          null
+                                      ? AssetImage('images/default-profile.png')
+                                      : NetworkImage(
+                                          state.currentUserModel.profileUrl,
+                                        ),
                                 ),
+                              ),
+                              Text(
+                                nullCheck(state.currentUserModel.title).length >
+                                        10
+                                    ? '@' +
+                                        state.currentUserModel.title
+                                            .substring(0, 10)
+                                    : '@' +
+                                        nullCheck(state.currentUserModel.title),
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.black54),
                               ),
                             ],
                           ),
                         ),
-                      )
-                    ],
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                TextField(
+                                  cursorColor: Colors.black,
+                                  controller: titleController,
+                                  decoration: new InputDecoration(
+                                      contentPadding: EdgeInsets.all(0),
+                                      isDense: true,
+                                      hintText: AppLocalizations.of(context)
+                                          .translate('whatsHappening'),
+                                      hintStyle: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                      border: InputBorder.none),
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    maxLines: 3,
+                                    cursorColor: Colors.black,
+                                    controller: subTitleController,
+                                    decoration: new InputDecoration(
+                                      contentPadding: EdgeInsets.only(top: 7),
+                                      hintText: AppLocalizations.of(context)
+                                          .translate('addStatement'),
+                                      hintStyle: TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.query_builder,
+                                        size: 15,
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(
+                                        '0s',
+                                        style:
+                                            Theme.of(context).textTheme.caption,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-                Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.query_builder,
-                        size: 15,
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Text(
-                        '0s',
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
@@ -186,14 +194,15 @@ class CreateNotification extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        content: Text('Please fill in the blanks'),
+                        content:
+                            Text(AppLocalizations.of(context).translate('add')),
                       );
                     },
                   );
                 }
               },
               child: Text(
-                "Share",
+                AppLocalizations.of(context).translate('share'),
                 style: TextStyle(color: Theme.of(context).primaryColorLight),
               ),
             ),
