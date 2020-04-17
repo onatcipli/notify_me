@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,15 +12,22 @@ import 'package:notify_me/widgets/search_bar.dart';
 import 'notifications.dart';
 
 class Home extends StatefulWidget {
+  final Function directToProfileWithEditMode;
   static final AbstractNotificationCardRepository notificationCardRepository =
       FirebaseNotificationRepository();
 
+  const Home({Key key, this.directToProfileWithEditMode}) : super(key: key);
+
   @override
-  _HomeState createState() => _HomeState();
+  _HomeState createState() => _HomeState(directToProfileWithEditMode);
 }
 
 class _HomeState extends State<Home> {
+  final Function directToProfileWithEditMode;
   FirebaseMessaging _firebaseMessaging;
+
+  _HomeState(this.directToProfileWithEditMode);
+
 
   @override
   void initState() {
@@ -100,7 +105,9 @@ class _HomeState extends State<Home> {
                 //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
                 // else
                 //   Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
-
+if (state.currentUserModel.title == null){
+                  directToProfileWithEditMode();
+                } else {
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -123,6 +130,7 @@ class _HomeState extends State<Home> {
                     );
                   },
                 );
+              }
               },
               child: Icon(
                 Icons.add,
