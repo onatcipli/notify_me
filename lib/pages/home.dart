@@ -96,12 +96,33 @@ class _HomeState extends State<Home> {
               backgroundColor: Colors.white,
               foregroundColor: Theme.of(context).primaryColorLight,
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CreateNotification(
-                              state: state,
-                            )));
+                // if(state.currentUserModel.id.isEmpty)
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                // else
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNotification()));
+
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Container(
+                            width: size.width - 20,
+                            height: size.height / 2 - size.height / 7 > 314
+                                ? size.height / 2 - size.height / 7
+                                : 314,
+                            color: Colors.transparent,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8))),
+                              child: CreateNotification(state: state),
+                            )),
+                      ),
+                    );
+                  },
+                );
               },
               child: Icon(
                 Icons.add,
