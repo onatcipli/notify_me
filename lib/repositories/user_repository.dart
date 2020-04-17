@@ -19,7 +19,10 @@ class FirebaseUserRepository extends AbstractUserRepository {
     UserModel model = await getUser(userId);
     if (!model.followings.contains(followingId)) {
       model.followings.add(followingId);
+      UserModel followingUser = await getUser(followingId);
+      followingUser.followerCount = followingUser.followerCount + 1;
       await updateUser(model);
+      await updateUser(followingUser);
       CloudMessagingRepository().addFollowing(followingId);
     }
     return model;
@@ -30,7 +33,10 @@ class FirebaseUserRepository extends AbstractUserRepository {
     UserModel model = await getUser(userId);
     if (model.followings.contains(followingId)) {
       model.followings.remove(followingId);
+      UserModel followingUser = await getUser(followingId);
+      followingUser.followerCount = followingUser.followerCount - 1;
       await updateUser(model);
+      await updateUser(followingUser);
       CloudMessagingRepository().removeFollowing(followingId);
     }
     return model;
