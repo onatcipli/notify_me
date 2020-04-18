@@ -44,7 +44,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       searchedNotifications = lastNotificationList;
     }
     if (_check1 && _check) {
-      (state as AvailableNotifications).notifications.forEach((current) {
+      lastNotificationList.forEach((current) {
         if (current.subTitle.toLowerCase().contains(event.key.toLowerCase()) ||
             current.title.toLowerCase().contains(event.key.toLowerCase()) ||
             current.ownerTitle
