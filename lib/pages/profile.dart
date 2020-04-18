@@ -28,7 +28,8 @@ class ProfilePage extends StatefulWidget {
   }
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>
+    with AutomaticKeepAliveClientMixin {
   File _image;
   FirebaseStorage firebaseStorage =
       FirebaseStorage(storageBucket: 'gs://notifyme-2c420.appspot.com');
@@ -462,6 +463,9 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class FollowingContent extends StatelessWidget {
