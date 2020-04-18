@@ -18,8 +18,8 @@ import 'package:notify_me/widgets/notification_card.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
-
   bool isEditMode;
+
   @override
   _ProfilePageState createState() => _ProfilePageState(isEditMode);
 
@@ -366,22 +366,26 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: IconButton(
                             iconSize: 30,
                             icon: Icon(isEditMode ? Icons.check : Icons.edit),
-                            onPressed: () {
-                              if (isEditMode &&
-                                  state.currentUserModel.title !=
-                                      _titleController.text &&
-                                  _titleController.text.isNotEmpty) {
-                                state.currentUserModel.title =
-                                    _titleController.text;
-                                BlocProvider.of<AuthenticationBloc>(context)
-                                    .add(UpdateUser(state.currentUserModel));
-                              }
-                              setState(() {
-                                isEditMode = !isEditMode;
-                                _titleController.text =
-                                    state.currentUserModel.title;
-                              });
-                            },
+                            onPressed: _isUploadingImage
+                                ? null
+                                : () {
+                                    if (isEditMode &&
+                                        state.currentUserModel.title !=
+                                            _titleController.text &&
+                                        _titleController.text.isNotEmpty) {
+                                      state.currentUserModel.title =
+                                          _titleController.text;
+                                      BlocProvider.of<AuthenticationBloc>(
+                                              context)
+                                          .add(UpdateUser(
+                                              state.currentUserModel));
+                                    }
+                                    setState(() {
+                                      isEditMode = !isEditMode;
+                                      _titleController.text =
+                                          state.currentUserModel.title;
+                                    });
+                                  },
                           ),
                         ),
                       ],
