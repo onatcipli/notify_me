@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColorLight,
               foregroundColor: Theme.of(context).primaryColorLight,
               onPressed: () {
-                if (state.currentUserModel.title == null){
+                if (state.currentUserModel.title == null || state.currentUserModel.profileUrl == null){
                   directToProfileWithEditMode();
                 } else
                   showDialog(
